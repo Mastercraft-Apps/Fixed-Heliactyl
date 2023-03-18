@@ -66,7 +66,7 @@
           ]
         },
         "giverole":{
-          "_comment": "Both the bot and the user must be on the server, give the specify role on registering",
+          "_comment": "The Discord bot must be in the server. Automatically assign a role to the user when he logs in",
           "enabled": true,
           "guildid": "000000000000000000",
           "roleid": "000000000000000000"
