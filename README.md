@@ -58,12 +58,12 @@ After configuring settings.json, to start the server use `node index.js`</br>
 To run in the background use pm2 (see pm2 section) or screen</br>
 `screen -S heliactyl node index.js`</br>
 To detach from the screen do ctrl + A + D</br>
-To reatach `screen -R heliactyl`</br>
+To reattach `screen -R heliactyl`</br>
 To stop ctrl + C
 
 ## 2. Setting up webserver
 
-<strong>2.1</strong>  Configure settings.json (specifically panel domain/apikey and discord auth settings for it to work)
+<strong>2.1</strong>  Configure settings.json (specify panel domain/apikey and discord auth settings for it to work)
 
 <strong>2.2</strong>  Start the server (Ignore the 2 strange errors that might come up)
 
