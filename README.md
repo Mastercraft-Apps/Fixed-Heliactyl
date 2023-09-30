@@ -41,7 +41,7 @@ Warning: You need Pterodactyl already set up on a domain for this method to work
 <strong>1.2</strong> Unarchive the file and set the server to use NodeJS 16
 
 ### Direct method
-<strong>1.1</strong> Install nodejs16, it's recommended to install it with nvm : 
+<strong>1.1</strong> Install nodejs16 or newer, it's recommended to install it with nvm : 
 - `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash`
 - reopen a new ssh session (eg restart putty)
 - `nvm install 16`
