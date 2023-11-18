@@ -678,7 +678,7 @@ module.exports.load = async function(app, db) {
                   );
             }
         } else {
-            if (settings.api.client.allow.renewsuspendsystem.enabled == true) return;
+            if (settings.renewals.status == true) return;
             for (let i = 0, len = userinfo.attributes.relationships.servers.data.length; i < len; i++) {
                 let suspendid = userinfo.attributes.relationships.servers.data[i].attributes.id;
                 await fetch(
