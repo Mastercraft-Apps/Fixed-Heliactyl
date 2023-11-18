@@ -293,7 +293,7 @@ app.post("/api/createcoupon", async (req, res) => {
       await db.set(`coins-${req.query.id}`, othercoins + coins)
       await db.set(`coins-${req.session.userinfo.id}`, usercoins - coins)
 
-      log('Gifted Coins', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent ${coins}\ coins to the user with the ID \`${req.query.id}\`.`)
+      log(`gifted coins`, `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent ${coins}\ coins to the user with the ID \`${req.query.id}\`.`)
       cb()
       return res.redirect(`/gift-coins?success=true`);
 
