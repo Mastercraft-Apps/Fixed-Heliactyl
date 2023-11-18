@@ -42,13 +42,13 @@ Warning: You need Pterodactyl already set up on a domain for this method to work
 
 ### Direct method
 <strong>1.1</strong> Install nodejs16 or newer, it's recommended to install it with nvm : 
-- `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash`
+- `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash`
 - reopen a new ssh session (eg restart putty)
 - `nvm install 16`
 - check the node version with `node -v` and switch between versions with `nvm use <version>`
 
 <strong>1.2</strong> Download heliactyl files in /var/www/heliactyl :
-- `git clone https://github.com/OpenHeliactyl/Heliactyl.git /var/www/heliactyl`
+- `git clone https://github.com/Lefraudeur/Heliactyl-fixed.git /var/www/heliactyl`
 
 <strong>1.3</strong> Installing required node modules (and build dependencies to avoid errors) :
 - `apt-get update && apt-get install libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev build-essential`
