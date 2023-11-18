@@ -260,7 +260,7 @@ module.exports.load = async function(app, db) {
 
       adminjs.suspend(req.session.userinfo.id);
 
-      log(`slots purchased`, `${req.session.userinfo.username}#${req.session.userinfo.discriminator} bought ${per} Slots from the store for \`${cost}\` Credits.`)
+      log(`server purchased`, `${req.session.userinfo.username}#${req.session.userinfo.discriminator} bought ${per} Slots server from the store for \`${cost}\` Credits.`)
 
       res.redirect((theme.settings.redirect.purchaseservers ? theme.settings.redirect.purchaseservers : "/") + "?err=none");
     }
