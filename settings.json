@@ -258,7 +258,7 @@
     "actions": {
       "user": {
         "signup": true,
-        "create server": true,
+        "created server": true,
         "gifted coins": true,
         "modify server": true,
         "buy servers": true,
