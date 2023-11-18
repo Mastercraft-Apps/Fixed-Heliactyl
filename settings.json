@@ -252,32 +252,32 @@
     "cost": 0,
     "delay": 14
   },
-  "logging": {
-    "status": false,
-    "webhook": "Webhook URL",
-    "actions": {
-      "user": {
-        "signup": true,
-        "created server": true,
-        "gifted coins": true,
-        "modify server": true,
-        "buy servers": true,
-        "buy ram": true,
-        "buy cpu": true,
-        "buy disk": true
-      }, 
-      "admin": {
-        "set coins": true,
-        "add coins": true,
-        "set resources": true,
-        "set plan": true,
-        "create coupon": true,
-        "revoke coupon": true,
-        "remove account": true,
-        "view ip": true
-      }
-    }
-  },
+  "logging": {
+    "status": false,
+    "webhook": "Webhook URL",
+    "actions": {
+      "user": {
+        "signup": true,
+        "created server": true,
+        "gifted coins": true,
+        "modify server": true,
+        "server purchased": true,
+        "ram purchased": true,
+        "cpu purchased": true,
+        "disk purchased": true
+      }, 
+      "admin": {
+        "set coins": true,
+        "add coins": true,
+        "set resources": true,
+        "set plan": true,
+        "create coupon": true,
+        "revoke coupon": true,
+        "remove account": true,
+        "view ip": true
+      }
+    }
+  },
   "antivpn": {
     "note": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Heliactyl will disable antivpn.",
     "status": false,
