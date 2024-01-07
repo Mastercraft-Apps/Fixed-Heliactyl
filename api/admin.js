@@ -229,6 +229,7 @@ module.exports.load = async function(app, db) {
             let diskstring = req.query.disk;
             let cpustring = req.query.cpu;
             let serversstring = req.query.servers;
+            let id = req.query.id;
 
             let currentextra = await db.get("extra-" + req.query.id);
             let extra;
@@ -283,6 +284,8 @@ module.exports.load = async function(app, db) {
             }
 
             adminjs.suspend(req.query.id);
+
+            log(`add resources`, `${req.session.userinfo.username}#${req.session.userinfo.discriminator} add the resources of the user with the ID \`${id}\` to:\`\`\`servers: ${serversstring}\nCPU: ${cpustring}%\nMemory: ${ramstring} MB\nDisk: ${diskstring} MB\`\`\``)
             return res.redirect(successredirect + "?err=none");
         } else {
             res.redirect(`${failredirect}?err=MISSINGVARIABLES`);
