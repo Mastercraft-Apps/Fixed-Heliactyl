@@ -269,6 +269,7 @@
       "admin": {
         "set coins": true,
         "add coins": true,
+        "add resources": true,
         "set resources": true,
         "set plan": true,
         "create coupon": true,
