@@ -81,7 +81,7 @@
     "variables": {
         "faviconlink": "https://cdn.discordapp.com/attachments/1063585626022223892/1065305275826966609/Screenshot_2023-01-18_162220.jpg",
         "home": {
-            "note": "Name & Icon have been moved to settings.json in Heliactyl 12.5.0",
+            "_comment": "Name & Icon have been moved to settings.json in Heliactyl 12.5.0",
             "admin": "admin",
             "buttontext": {
                 "loggedin": {
