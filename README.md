@@ -6,28 +6,28 @@
 
 All features:
 - Resource Management (Use it to create servers, gift them, etc)
-- Coins (AFK Page earning, Linkvertise earning, Gift them away)
+- Coins (AFK Page Earning, Linkvertise earning, Gift them away)
 - Renewal (Require coins for renewal)
-- Coupons (Gives resources & coins to a user)
-- Servers (create, view, edit servers)
-- Payments (buy via stripe)
+- Coupons (which give resources & coins to a user)
+- Servers (create, view, and edit servers)
+- Payments (buy via Stripe)
 - Login Queue (prevent overload)
 - User System (auth, regen password, etc)
 - Store (buy resources with coins)
 - Dashboard (view resources)
-- Join for Rewards (join discord servers for coins)
+- Join for Rewards (join Discord servers for coins).
 - Admin (set/add/remove coins & resources, create/revoke coupons)
 - API (for bots & other things)
 
 # What happened to 13.x and 15.x?
 
-Due to major issues with both versions, we've decided to come back to v12 and recontinue it
+Due to major issues with both versions, we've decided to return to version 12 and continue.
 The latest versions will be on v12 now
 
 # Warning
 
-We cannot force you to keep the "Powered by Heliactyl" in the footer, but please consider keeping it. It helps getting more visibility to the project and so getting better. We won't do technical support for installations without the notice in the footer. We may DMCA the website in certain conditions.
-Please do keep the footer though.
+We cannot force you to keep "Powered by Heliactyl" in the footer, but please consider keeping it. It helps to get more visibility for the project, which is getting better. We won't provide technical support for installations without the notice in the footer. We may DMCA the website under certain conditions.
+Please do keep the footer, though.
 
 <hr>
 
