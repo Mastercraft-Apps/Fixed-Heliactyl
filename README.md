@@ -22,7 +22,7 @@ All features:
 # What happened to 13.x and 15.x?
 
 Due to major issues with both versions, we've decided to return to V12 and continue.
-The latest versions will be on v12 now
+The latest versions will be on v12 now.
 
 # Warning
 
