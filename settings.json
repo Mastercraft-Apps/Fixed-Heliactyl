@@ -32,6 +32,28 @@
     "key": "100000000000000",
     "coins": 100
   },
+    "category": {
+    "_comment": "Billing category is stripe option if true you can see the billing category ",
+    "management": true,
+    "coins & resources": true,
+    "miscellaneous": true
+  },
+  "pages": {
+    "dashboard": { "url": "dashboard", "enabled": true },
+    "your server": { "url": "servers", "enabled": true },
+    "account settings": { "url": "settings", "enabled": true },
+    "resources store": { "url": "store", "enabled": true },
+    "afk page": { "url": "afk", "enabled": true },
+    "linkvertise": { "url": "lv", "enabled": true },
+    "join for rewards": { "url": "j4r", "enabled": true },
+    "gift coins": { "url": "gift-coins", "enabled": true },
+    "gift resources": { "url": "gift-resources", "enabled": true },
+    "redeem coupon": { "url": "redeem", "enabled": true },
+    "panel": { "url": "panel", "enabled": true },
+    "admin": { "url": "admin", "enabled": true },
+    "logout": { "url": "logout", "enabled": true }
+  },
+
   "database": "sqlite://database.sqlite",
   "api": {
     "client": {
