@@ -33,7 +33,7 @@
     "coins": 100
   },
     "category": {
-    "_comment": "Billing category is stripe option if true you can see the billing category ",
+    "_comment": "Billing category is a stripe option; if true, you can see the billing category.",
     "management": true,
     "coins & resources": true,
     "miscellaneous": true
