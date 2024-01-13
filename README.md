@@ -48,7 +48,7 @@ Warning: You need Pterodactyl already set up on a domain for this method to work
 - check the node version with `node -v` and switch between versions with `nvm use <version>`
 
 <strong>1.2</strong> Download heliactyl files in /var/www/heliactyl :
-- `git clone https://github.com/Lefraudeur/Heliactyl-fixed.git /var/www/heliactyl`
+- `git clone https://github.com/OvernodeProjets/Heliactyl-fixed.git /var/www/heliactyl`
 
 <strong>1.3</strong> Installing required node modules (and build dependencies to avoid errors) :
 - `apt-get update && apt-get install libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev build-essential`
