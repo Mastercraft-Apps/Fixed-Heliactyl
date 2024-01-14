@@ -24,8 +24,9 @@
                     <% if (!req.session.userinfo)  { %>
                     <a role="button" class="button" href="<%= extra.home.buttontext.loggedout.link %>" onclick="this.classList.toggle('button--loading')"><span class="button__text">Login</span></a>
                     <% } else { %>
-                      <a role="button" class="button" href="<%= extra.home.buttontext.loggedin.link %>">Login as <%= req.session.userinfo.username %>#<%= req.session.userinfo.discriminator %></a><br />
-                      <a role="button" style="font-size: 18px; margin-top: 6px;" class="btn btn-primary btn-lg" href="<%= extra.home.buttontext.loggedout.link %>">Login on a different account</a>
+                      <a role="button" class="button logged-in-link" href="<%= extra.home.buttontext.loggedin.link %>" style="color: white;">Login as <%= req.session.userinfo.username %>#<%= req.session.userinfo.discriminator %></a>
+                      <br style="margin-bottom: 10px;" />
+                      <a role="button" class="btn btn-primary btn-lg" href="<%= extra.home.buttontext.loggedout.link %>" style="font-size: 18px; margin-top: 6px; margin-bottom: 15px; color: white;">Login on a different account</a>
                     <% } %>
                     <br>
                   </div>
