@@ -144,10 +144,10 @@ Starting the Dashboard in Background:
 - To run Heliactyl, use `pm2 start index.js --name "heliactyl"`
 - To view logs, run `pm2 logs Heliactyl`
 
-Making the dashboard runs on startup:
+Making the dashboard run on startup:
 - Make sure your dashboard is running in the background with the help of [pm2](https://github.com/Unitech/pm2)
-- You can check if Heliactyl is running in background with `pm2 list`
-- Once you confirmed that Heliactyl is running in background, you can create a startup script by running `pm2 startup` and `pm2 save`
+- You can check if Heliactyl is running in the background with `pm2 list`
+- Once you confirm that Heliactyl is running in the background, you can create a startup script by running `pm2 startup` and `pm2 save`
 - Note: Supported init systems are `systemd`, `upstart`, `launchd`, `rc.d`
 - To stop your Heliactyl from running in the background, use `pm2 unstartup`
 
