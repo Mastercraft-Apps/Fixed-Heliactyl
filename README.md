@@ -41,9 +41,9 @@ Warning: You need Pterodactyl already set up on a domain for this method to work
 <strong>1.2</strong> Unarchive the file and set the server to use NodeJS 16
 
 ### Direct method
-<strong>1.1</strong> Install nodejs16 or newer, it's recommended to install it with nvm : 
+<strong>1.1</strong> Install Node.js 16 or newer, it's recommended to install it with nvm : 
 - `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash`
-- reopen a new ssh session (eg restart putty)
+- reopen a new ssh session (e.g., restart putty)
 - `nvm install 16`
 - check the node version with `node -v` and switch between versions with `nvm use <version>`
 
@@ -54,12 +54,12 @@ Warning: You need Pterodactyl already set up on a domain for this method to work
 - `apt-get update && apt-get install libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev build-essential`
 - `cd /var/www/heliactyl && npm i`
 
-After configuring settings.json, to start the server use `node index.js`</br>
-To run in the background use pm2 (see pm2 section) or screen</br>
+After configuring settings.json, to start the server, use `node index.js`</br>
+To run in the background, use PM2 (see PM2 section) or screen</br>
 `screen -S heliactyl node index.js`</br>
-To detach from the screen do ctrl + A + D</br>
+To detach from the screen do Ctrl + A + D</br>
 To reattach `screen -R heliactyl`</br>
-To stop ctrl + C
+To stop Ctrl + C
 
 ## 2. Setting up webserver
 
