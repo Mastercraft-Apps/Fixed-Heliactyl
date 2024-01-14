@@ -46,8 +46,6 @@ module.exports.load = async function(app, db) {
 
     await db.set("extra-" + req.session.userinfo.id, extra);
 
-    //
-
     let coins = await db.get("coins-" + req.session.userinfo.id) || 0;
     coins = coins + couponinfo.coins;
     await db.set("coins-" + req.session.userinfo.id, coins);
