@@ -230,7 +230,7 @@ nanobar.go(100);
           }
         }
 	      
-        //give role on login
+        // Give a discord role on login
         if (newsettings.api.client.bot.giverole.enabled == true){
           if (typeof newsettings.api.client.bot.giverole.guildid == "string" && typeof newsettings.api.client.bot.giverole.roleid == "string") {
             await fetch(
