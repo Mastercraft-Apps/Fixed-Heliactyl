@@ -43,11 +43,11 @@
                 </div>
               <% } %>
             <% } %>
-				    <% if (req.query.code) { %>
-					<div class="alert" style="background-color: #007fcc; border-radius: 15px;">
-					Success! You have created a coupon code with the name of: <%= req.query.code %>
-					</div>
-				    <% } %>
+	<% if (req.query.code) { %>
+		<div class="alert" style="background-color: #007fcc; border-radius: 15px;">
+		Success! You have created a coupon code with the name of: <%= req.query.code %>
+		</div>
+	<% } %>
             <div class="row">
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -62,19 +62,19 @@
               </div>
             </div>
             </div>
-                                    <script>
-                                        fetch("https://ovrxglobal.github.io/versionapi/")
-                                            .then(res => Promise.resolve(res.json()).then(ver => {
-                                                let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
-                                                if (ver.version == currentver) {
-                                                    document.getElementById("latestversion").innerHTML = `<span>You are running Heliactyl version <code style="color: #007fcc" >v${currentver}</code>. Heliactyl is up-to-date!</span>`;
-                                                } else if (ver.prerelease == currentver) {
-                                                    document.getElementById("latestversion").innerHTML = `<span>You are running Heliactyl version <code style="color: #007fcc">v${currentver}</code>. Heliactyl is up-to-date!</span>`;
-                                                } else {
-                                                    document.getElementById("latestversion").innerHTML = `<span>Heliactyl is <b>not up-to-date!</b> The latest version is <code style="color: #007fcc" >v${ver.version}</code> and you are currently running version <code style="color: #007fcc" >v<%= settings.version %></code>.</span>`;
-                                                };
-                                            }));
-                                    </script>
+        <script>
+        	fetch("https://ovrxglobal.github.io/versionapi/")
+               	.then(res => Promise.resolve(res.json()).then(ver => {
+                let currentver = "<%= settings.version.replace(/"/g, `\\\\"`) %>";
+                if (ver.version == currentver) {
+                	document.getElementById("latestversion").innerHTML = `<span>You are running Heliactyl version <code style="color: #007fcc" >v${currentver}</code>. Heliactyl is up-to-date!</span>`;
+                } else if (ver.prerelease == currentver) {
+                        document.getElementById("latestversion").innerHTML = `<span>You are running Heliactyl version <code style="color: #007fcc">v${currentver}</code>. Heliactyl is up-to-date!</span>`;
+                } else {
+                        document.getElementById("latestversion").innerHTML = `<span>Heliactyl is <b>not up-to-date!</b> The latest version is <code style="color: #007fcc" >v${ver.version}</code> and you are currently running version <code style="color: #007fcc" >v<%= settings.version %></code>.</span>`;
+                };
+        }));
+        </script>
             <div class="row">
               <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
