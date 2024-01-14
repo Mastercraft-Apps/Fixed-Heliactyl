@@ -3,7 +3,7 @@
   "version": "12.7.5",
   "description": "The best Pterodactyl client area.",
   "main": "index.js",
-  "author": "Sryden UK",
+  "author": "Overnode",
   "dependencies": {
     "@keyv/mongo": "^1.2.1",
     "@keyv/mysql": "^1.1.5",
