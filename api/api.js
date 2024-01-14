@@ -267,6 +267,7 @@ app.post("/api/createcoupon", async (req, res) => {
   });
 
   const queue = new Queue()
+	
   app.get("/giftcoins", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect(`/`);
 
