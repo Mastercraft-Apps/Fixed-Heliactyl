@@ -1,7 +1,8 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-  <div style="background-color: #212530" class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-    <a style="color: white" class="sidebar-brand brand-logo" href="/<%= settings.pages.dashboard.url %>"><%= settings.name %></a>
+  <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top" style="background-color: #212530">
+    <a class="sidebar-brand brand-logo" style="color: white" href="/<%= settings.pages.dashboard.url %>"><%= settings.name %></a>
   </div>
+
   <ul class="nav">
     <% const categories = [
       { title: 'Management', pages: ['dashboard', 'your server', 'account settings'] },
@@ -14,28 +15,22 @@
       <li class="nav-item nav-category">
         <span class="nav-link text-white"><h4><%= category.title %></h4></span>
       </li>
-      <%
-      const menuItems = category.pages.map(page => {
-        const { url, enabled } = settings.pages[page];
-        return {
-          title: page.charAt(0).toUpperCase() + page.slice(1),
-          link: `../${url}`,
-          enabled
-        };
-      });
 
-      menuItems.forEach(item => {
-        if (item.enabled) {
+      <% category.pages.forEach(page => {
+        const { url, enabled } = settings.pages[page];
+        const formattedTitle = page.charAt(0).toUpperCase() + page.slice(1);
+        const link = `../${url}`;
+
+        if (enabled && (formattedTitle.toLowerCase() !== 'admin' || pterodactyl.root_admin === true)) {
           %>
           <li class="nav-item menu-items">
-            <a class="nav-link" href="<%= item.link %>">
-              <span class="menu-title"><%= item.title %></span>
+            <a class="nav-link" href="<%= link %>">
+              <span class="menu-title"><%= formattedTitle %></span>
             </a>
           </li>
           <%
         }
-      });
-    });
-    %>
+      }); 
+    }); %>
   </ul>
 </nav>
