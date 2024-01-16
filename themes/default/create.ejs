@@ -108,12 +108,13 @@
                             <option value="<%= name %>"><%= value.display %></option>
                           <% } %>
                         </select>
-                      </div><br>
-                      <a role="button" id="create-btn" class="button"  href="javascript: submitNew()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Deploy
-<% if (settings.servercreation.cost > 1) { %>
-- <%= settings.servercreation.cost %>
-<% } %>
-</span></a><br><br>
+                       </div>
+                        <a role="button" id="create-btn" class="button"  href="javascript: submitNew()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Deploy
+                        <% if (settings.servercreation.cost > 1) { %>
+                        - <%= settings.servercreation.cost %>
+                       <% } %>
+                      </span>
+                     </a>
                     </form>
                   </div>
                 </div>
