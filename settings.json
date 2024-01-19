@@ -281,6 +281,7 @@
       "user": {
       "signup": true,
       "created server": true,
+      "coupon redeemed": true,
       "gifted coins": true,
       "modify server": true,
       "server purchased": true,
