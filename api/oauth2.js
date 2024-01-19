@@ -141,7 +141,7 @@ nanobar.go(100);
           const ipuser = await db.get(`ipuser-${ip}`)
           if (ipuser && ipuser !== userinfo.id) {
             renderFile(
-              `./themes/${newsettings.defaulttheme}/alerts/alt.ejs`,
+              `./themes/${newsettings.theme}/alerts/alt.ejs`,
               {
                 settings: newsettings,
                 db,
