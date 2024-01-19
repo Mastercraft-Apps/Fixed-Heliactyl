@@ -1,5 +1,6 @@
 const indexjs = require("../index.js");
 const fs = require("fs");
+const log = require('../misc/log')
 
 module.exports.load = async function(app, db) {
   app.get("/coupon_redeem", async (req, res) => {
@@ -7,7 +8,8 @@ module.exports.load = async function(app, db) {
 
     let theme = indexjs.get(req);
 
-    let code = req.query.code;
+    let code = req.query.code ? req.query.code.slice(0, 200) : Math.random().toString(36).substring(2, 15);
+    let name = req.query.name 
 
     if (!code) return res.redirect(theme.settings.redirect.missingorinvalidcouponcode + "?err=MISSINGCOUPONCODE");
 
@@ -19,7 +21,8 @@ module.exports.load = async function(app, db) {
       disk: x,
       cpu: x,
       servers: x,
-      coins: x
+      coins: x,
+      name: name
     }
     */
 
@@ -34,10 +37,13 @@ module.exports.load = async function(app, db) {
       servers: 0
     };
 
-    if (couponinfo.ram) extra.ram = extra.ram + couponinfo.ram;
-    if (couponinfo.disk) extra.disk = extra.disk + couponinfo.disk;
-    if (couponinfo.cpu) extra.cpu = extra.cpu + couponinfo.cpu;
-    if (couponinfo.servers) extra.servers = extra.servers + couponinfo.servers;
+    // Assign values to the variables
+    let { ram, disk, cpu, servers, coins } = couponinfo;
+
+    if (ram) extra.ram = extra.ram + ram;
+    if (disk) extra.disk = extra.disk + disk;
+    if (cpu) extra.cpu = extra.cpu + cpu;
+    if (servers) extra.servers = extra.servers + servers;
 
     if (extra.ram > 999999999999999) extra.ram = 999999999999999;
     if (extra.disk > 999999999999999) extra.disk = 999999999999999;
@@ -46,14 +52,15 @@ module.exports.load = async function(app, db) {
 
     await db.set("extra-" + req.session.userinfo.id, extra);
 
-    let coins = await db.get("coins-" + req.session.userinfo.id) || 0;
-    coins = coins + couponinfo.coins;
-    await db.set("coins-" + req.session.userinfo.id, coins);
+    let userCoins = await db.get("coins-" + req.session.userinfo.id) || 0;
+    userCoins = userCoins + coins;
+    await db.set("coins-" + req.session.userinfo.id, userCoins);
+
+    log(`coupon redeemed`, `${req.session.userinfo.username}#${req.session.userinfo.discriminator} redeemed the coupon code \`${code}\` which gives:\`\`\`coins: ${coins}\nMemory: ${ram} MB\nDisk: ${disk} MB\nCPU: ${cpu}%\nServers: ${servers}\`\`\``);
 
     res.redirect(theme.settings.redirect.successfullyredeemedcoupon + "?err=SUCCESSCOUPONCODE");
 
     let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
-
   });
 }
 
