@@ -32,7 +32,7 @@
     "key": "100000000000000",
     "coins": 100
   },
-    "category": {
+  "category": {
     "_comment": "Billing category is a stripe option; if true, you can see the billing category.",
     "management": true,
     "coins & resources": true,
@@ -52,6 +52,11 @@
     "panel": { "url": "panel", "enabled": true },
     "admin": { "url": "admin", "enabled": true },
     "logout": { "url": "logout", "enabled": true }
+  },
+  "adsense": {
+    "_comment": "This feature facilitates the integration of AdSense, adsterra, and other similar applications into Heliactyl.",
+    "enabled": false,
+    "script": "Add your AdSense links here."
   },
 
   "database": "sqlite://database.sqlite",
