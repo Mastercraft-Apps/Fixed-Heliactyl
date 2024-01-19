@@ -247,20 +247,20 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
 });
 
 module.exports.get = function(req) {
-  let defaulttheme = JSON.parse(fs.readFileSync("./settings.json")).defaulttheme;
+  let theme = JSON.parse(fs.readFileSync("./settings.json")).theme;
   let tname = encodeURIComponent(getCookie(req, "theme"));
   let name = (
     tname ?
       fs.existsSync(`./themes/${tname}`) ?
         tname
-      : defaulttheme
-    : defaulttheme
+      : theme
+    : theme
   )
   return {
     settings: (
       fs.existsSync(`./themes/${name}/pages.json`) ?
         JSON.parse(fs.readFileSync(`./themes/${name}/pages.json`).toString())
-      : defaultthemesettings
+      : themesettings
     ),
     name: name
   };
