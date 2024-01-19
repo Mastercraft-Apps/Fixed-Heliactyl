@@ -54,6 +54,7 @@
     "logout": { "url": "logout", "enabled": true }
   },
   "adsense": {
+    "_devcomment": "Doesn't work, i will add soon",
     "_comment": "This feature facilitates the integration of AdSense, adsterra, and other similar applications into Heliactyl.",
     "enabled": false,
     "script": "Add your AdSense links here."
