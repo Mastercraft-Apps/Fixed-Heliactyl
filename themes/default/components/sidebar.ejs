@@ -1,14 +1,28 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
   <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top" style="background-color: #212530">
-    <a class="sidebar-brand brand-logo" style="color: white" href="/<%= settings.pages.dashboard.url %>"><%= settings.name %></a>
+    <a class="sidebar-brand brand-logo" style="color: white" href="/dashboard"><%= settings.name %></a>
   </div>
 
   <ul class="nav">
     <% const categories = [
       { title: 'Management', pages: ['dashboard', 'your server', 'account settings'] },
-      { title: 'Coins & Resources', pages: ['resources store', 'afk page', 'linkvertise', 'join for rewards', 'gift coins', 'gift resources', 'redeem coupon'] },
+      { title: 'Coins & Resources', pages: ['resources store', 'afk page', 'gift coins', 'gift resources', 'redeem coupon'] },
       { title: 'Miscellaneous', pages: ['panel', 'admin', 'logout'] }
     ];
+
+    const pageToUrl = {
+      'dashboard': 'dashboard',
+      'your server': 'servers',
+      'account settings': 'settings',
+      'resources store': 'store',
+      'afk page': 'afk',
+      'gift coins': 'gift-coins',
+      'gift resources': 'gift-resources',
+      'redeem coupon': 'redeem',
+      'panel': 'panel',
+      'admin': 'admin',
+      'logout': 'logout'
+    };
 
     categories.forEach(category => {
       %>
@@ -17,9 +31,9 @@
       </li>
 
       <% category.pages.forEach(page => {
-        const { url, enabled } = settings.pages[page];
+        const { enabled } = settings.pages[page];
         const formattedTitle = page.charAt(0).toUpperCase() + page.slice(1);
-        const link = `../${url}`;
+        const link = `/${pageToUrl[page]}`;
 
         if (enabled && (formattedTitle.toLowerCase() !== 'admin' || pterodactyl.root_admin === true)) {
           %>
