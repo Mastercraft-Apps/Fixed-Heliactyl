@@ -38,21 +38,20 @@
     "coins & resources": true,
     "miscellaneous": true
   },
-  "pages": {
-    "dashboard": { "url": "dashboard", "enabled": true },
-    "your server": { "url": "servers", "enabled": true },
-    "account settings": { "url": "settings", "enabled": true },
-    "resources store": { "url": "store", "enabled": true },
-    "afk page": { "url": "afk", "enabled": true },
-    "linkvertise": { "url": "lv", "enabled": true },
-    "join for rewards": { "url": "j4r", "enabled": true },
-    "gift coins": { "url": "gift-coins", "enabled": true },
-    "gift resources": { "url": "gift-resources", "enabled": true },
-    "redeem coupon": { "url": "redeem", "enabled": true },
-    "panel": { "url": "panel", "enabled": true },
-    "admin": { "url": "admin", "enabled": true },
-    "logout": { "url": "logout", "enabled": true }
-  },
+    "pages": {
+      "_comment": "Linkvertise, and j4r can be activated in their configuration sections.",
+      "dashboard": { "enabled": true },
+      "your server": { "enabled": true },
+      "account settings": { "enabled": true },
+      "resources store": { "enabled": true },
+      "afk page": { "enabled": true },  
+      "gift coins": { "enabled": true },
+      "gift resources": { "enabled": true },
+      "redeem coupon": { "enabled": true },
+      "panel": { "enabled": true },
+      "admin": { "enabled": true },
+      "logout": { "enabled": true }
+    },
   "adsense": {
     "_devcomment": "Doesn't work, i will add soon",
     "_comment": "This feature facilitates the integration of AdSense, adsterra, and other similar applications into Heliactyl.",
