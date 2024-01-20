@@ -6,22 +6,24 @@
   <ul class="nav">
     <% const categories = [
       { title: 'Management', pages: ['dashboard', 'your server', 'account settings'] },
-      { title: 'Coins & Resources', pages: ['resources store', 'afk page', 'gift coins', 'gift resources', 'redeem coupon'] },
+      { title: 'Coins & Resources', pages: ['resources store', 'afk page', 'linkvertise', 'join for rewards', 'gift coins', 'gift resources', 'redeem coupon'] },
       { title: 'Miscellaneous', pages: ['panel', 'admin', 'logout'] }
     ];
 
-    const pageToUrl = {
-      'dashboard': 'dashboard',
-      'your server': 'servers',
-      'account settings': 'settings',
-      'resources store': 'store',
-      'afk page': 'afk',
-      'gift coins': 'gift-coins',
-      'gift resources': 'gift-resources',
-      'redeem coupon': 'redeem',
-      'panel': 'panel',
-      'admin': 'admin',
-      'logout': 'logout'
+    const pageToUrlAndIcon = {
+      'dashboard': ['dashboard', 'speedometer'],
+      'your server': ['servers', 'file-document-box'],
+      'account settings': ['settings', 'settings'],
+      'resources store': ['store', 'store'],
+      'afk page': ['afk', 'dns'],
+      'linkvertise': ['lv', 'link-variant'],
+      'join for rewards': ['j4r', 'gift-outline'],
+      'gift coins': ['gift-coins', 'coin'],
+      'gift resources': ['gift-resources', 'gift'],
+      'redeem coupon': ['redeem', 'ticket-percent'],
+      'panel': ['panel', 'view-list'],
+      'admin': ['admin', 'account'],
+      'logout': ['logout', 'logout']
     };
 
     categories.forEach(category => {
@@ -33,12 +35,15 @@
       <% category.pages.forEach(page => {
         const { enabled } = settings.pages[page];
         const formattedTitle = page.charAt(0).toUpperCase() + page.slice(1);
-        const link = `/${pageToUrl[page]}`;
+        const [link, icon] = pageToUrlAndIcon[page] || [];
 
         if (enabled && (formattedTitle.toLowerCase() !== 'admin' || pterodactyl.root_admin === true)) {
           %>
           <li class="nav-item menu-items">
             <a class="nav-link" href="<%= link %>">
+              <span class="menu-icon">
+                <i class="mdi mdi-<%= icon %>"></i>
+              </span>
               <span class="menu-title"><%= formattedTitle %></span>
             </a>
           </li>
