@@ -45,7 +45,7 @@
       "resources store": { "enabled": true },
       "afk page": { "enabled": true },  
       "linkvertise": { "enabled": true },
-     "join for rewards": { "enabled": true },
+      "join for rewards": { "enabled": true },
       "gift coins": { "enabled": true },
       "gift resources": { "enabled": true },
       "redeem coupon": { "enabled": true },
