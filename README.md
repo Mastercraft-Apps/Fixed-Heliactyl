@@ -55,11 +55,7 @@ Warning: You need Pterodactyl already set up on a domain for this method to work
 - `cd /var/www/heliactyl && npm i`
 
 After configuring settings.json, to start the server, use `node index.js`</br>
-To run in the background, use PM2 (see PM2 section) or screen</br>
-`screen -S heliactyl node index.js`</br>
-To detach from the screen do Ctrl + A + D</br>
-To reattach `screen -R heliactyl`</br>
-To stop Ctrl + C
+To run in the background, use PM2 (see PM2 section)</br>
 
 ## 2. Setting up webserver
 
