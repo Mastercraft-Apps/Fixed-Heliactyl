@@ -38,20 +38,20 @@
     "coins & resources": true,
     "miscellaneous": true
   },
-    "pages": {
-      "dashboard": { "enabled": true },
-      "your server": { "enabled": true },
-      "account settings": { "enabled": true },
-      "resources store": { "enabled": true },
-      "afk page": { "enabled": true },  
-      "linkvertise": { "enabled": true },
-      "join for rewards": { "enabled": true },
-      "gift coins": { "enabled": true },
-      "gift resources": { "enabled": true },
-      "redeem coupon": { "enabled": true },
-      "panel": { "enabled": true },
-      "admin": { "enabled": true },
-      "logout": { "enabled": true }
+  "pages": {
+    "dashboard": { "enabled": true },
+    "your server": { "enabled": true },
+    "account settings": { "enabled": true },
+    "resources store": { "enabled": true },
+    "afk page": { "enabled": true },  
+    "linkvertise": { "enabled": true },
+    "join for rewards": { "enabled": true },
+    "gift coins": { "enabled": true },
+    "gift resources": { "enabled": true },
+    "redeem coupon": { "enabled": true },
+    "panel": { "enabled": true },
+    "admin": { "enabled": true },
+    "logout": { "enabled": true }
     },
   "adsense": {
     "_devcomment": "Doesn't work, i will add soon",
