@@ -29,13 +29,3 @@ module.exports.load = async function(app, db) {
       		await db.set(`coins-${req.session.userinfo.id}`, ccoins)
   });
 };
-
-function makeid(length) {
-  let result = '';
-  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-     result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
