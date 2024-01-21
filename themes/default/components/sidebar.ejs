@@ -33,11 +33,10 @@
       </li>
 
       <% category.pages.forEach(page => {
-        const { enabled } = settings.pages[page];
         const formattedTitle = page.charAt(0).toUpperCase() + page.slice(1);
         const [link, icon] = pageToUrlAndIcon[page] || [];
 
-        if (enabled && (formattedTitle.toLowerCase() !== 'admin' || pterodactyl.root_admin === true)) {
+        if (settings.pages[page] !== false && (formattedTitle.toLowerCase() !== 'admin' || pterodactyl.root_admin === true)) {
           %>
           <li class="nav-item menu-items">
             <a class="nav-link" href="/<%= link %>">
