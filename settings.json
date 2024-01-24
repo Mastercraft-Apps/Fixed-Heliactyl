@@ -2,6 +2,7 @@
   "version": "12.7.7",
   "name": "Heliactyl",
   "letter": "H",
+  "icon": "https://cdn.discordapp.com/attachments/881207010417315861/948924037176901642/Copy_of_H_33.png",
   "theme": "default",
   "timezone": "Europe/Paris",
   "resources": {
