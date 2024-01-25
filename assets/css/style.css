@@ -16074,14 +16074,14 @@ code {
 
 .badge-outline-green {
   color: white;
-  background-color: #0c573f;
+  background-color: #00d25b;
   border: 1px; 
   transition-duration: 0.1s;
 }
 
 .badge-outline-green:hover {
   color: white;
-  background-color: #0c573f;
+  background-color: #00d25b;
   border: 1px;
   transition-duration: 0.1s;
 }
