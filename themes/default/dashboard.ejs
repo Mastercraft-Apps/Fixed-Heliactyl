@@ -11,6 +11,7 @@
         <%- include('./components/topnav') %>
         <!-- partial -->
         <div style="background-color: #111319" class="main-panel">
+          
           <div style="background-color: #111319" class="content-wrapper">
 
            <h2>Dashboard</h2>
@@ -62,16 +63,61 @@
                   </div>
                 </div>
               </div>
+              <div class="row ">
+                <div class="col-12 grid-margin">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Server Information</h4>
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th> Server Name </th>
+                              <th> CPU </th>
+                              <th> RAM </th>
+                              <th> Disk </th>
+                              <th style="position: relative; left: 115px;"> Options </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+                                <tr>
+                                  <td> You do not own any servers! Why not create one? </td>
+                                </tr>
+                              <% } else { %>
+                                <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+                                  <tr>
+                                    <td>
+                                      <span class="pl-2"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></span>
+                                    </td>
+                                    <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu %>% </td>
+                                    <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory %>MB </td>
+                                    <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk %>MB </td>
+                                    <td>
+                                      <a role="button" class="badge badge-outline-green" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
+                                    </td>
+                                    <td>
+                                      <a role="button" class="badge badge-outline-red" onclick="if (confirm('Are you sure you want to delete the server? This action is irreversible.')) { window.location.href='/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }">Delete</a>
+                                    </td>
+                                  </tr>
+                                <% } %>
+                              <% } %>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-         
-          <!-- content-wrapper ends -->
-          <%- include('./components/footer') %>
-        </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
+           <!-- content-wrapper ends -->
+         <%- include('./components/footer') %>
+       </div>
+     <!-- main-panel ends -->
     </div>
-    <!-- container-scroller -->
-    <%- include('./components/scripts') %>
-  </body>
-</html>
+   <!-- page-body-wrapper ends -->
+  </div>
+ <!-- container-scroller -->
+ <%- include('./components/scripts') %>
+ </body>
+</html>            
