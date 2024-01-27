@@ -11,21 +11,22 @@ if (settings.api.client.oauth2.callbackpath.slice(0, 1) !== "/")
 if (settings.pterodactyl.domain.slice(-1) == "/")
   settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
 
-const fetch = require('node-fetch');
-
 const indexjs = require("../index.js");
 const log = require('../misc/log')
 
 const fs = require("fs");
-const { renderFile } = require('ejs')
+const { renderFile } = require('ejs');
+const fetch = require('node-fetch');
 const vpnCheck = require("../misc/vpnCheck");
 
+
 module.exports.load = async function (app, db) {
+  const settings = require("../settings.json");
+  
   app.get("/login", async (req, res) => {
     if (req.query.redirect) req.session.redirect = "/" + req.query.redirect;
-    let newsettings = JSON.parse(fs.readFileSync("./settings.json"));
-    res.redirect(`https://discord.com/api/oauth2/authorize?client_id=${settings.api.client.oauth2.id}&redirect_uri=${encodeURIComponent(settings.api.client.oauth2.link + settings.api.client.oauth2.callbackpath)}&response_type=code&scope=identify%20email${newsettings.api.client.bot.joinguild.enabled == true ? "%20guilds.join" : ""}${newsettings.api.client.j4r.enabled == true ? "%20guilds" : ""}${settings.api.client.oauth2.prompt == false ? "&prompt=none" : (req.query.prompt ? (req.query.prompt == "none" ? "&prompt=none" : "") : "")}`);
-  });
+    res.redirect(`https://discord.com/api/oauth2/authorize?client_id=${settings.api.client.oauth2.id}&redirect_uri=${encodeURIComponent(settings.api.client.oauth2.link + settings.api.client.oauth2.callbackpath)}&response_type=code&scope=identify%20email${settings.api.client.bot.joinguild.enabled == true ? "%20guilds.join" : ""}${settings.api.client.j4r.enabled == true ? "%20guilds" : ""}${settings.api.client.oauth2.prompt == false ? "&prompt=none" : (req.query.prompt ? (req.query.prompt == "none" ? "&prompt=none" : "") : "")}`);
+});
 
   app.get("/logout", (req, res) => {
     let theme = indexjs.get(req);
