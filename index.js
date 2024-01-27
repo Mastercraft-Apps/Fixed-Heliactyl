@@ -14,6 +14,7 @@ const fetch = require('node-fetch');
 const chalk = require("chalk");
 const axios = require("axios");
 const arciotext = require('./misc/arciotext')
+
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 if (typeof btoa === 'undefined') {
@@ -31,7 +32,7 @@ if (typeof atob === 'undefined') {
 
 const settings = require("./settings.json");
 
-const defaultthemesettings = {
+const themesettings = {
   index: "index.ejs",
   notfound: "index.ejs",
   redirect: {},
@@ -85,7 +86,7 @@ const Keyv = require("keyv");
 const db = new Keyv(settings.database);
 
 db.on('error', err => {
-  console.log(chalk.red("[DATABASE] An error has occured when attempting to access the database."))
+  console.log(chalk.red("[Heliactyl] An error has occured when attempting to access the database."))
 });
 
 module.exports.db = db;
@@ -117,12 +118,32 @@ app.use(express.json({
   verify: undefined
 }));
 
-const listener = app.listen(settings.website.port, function() {
+const listener = app.listen(settings.website.port, async function() {
   console.clear();
   console.log(chalk.gray("  "));
   console.log(chalk.gray("  ") + chalk.bgBlue("  APPLICATION IS ONLINE  "));
   console.log(chalk.gray("  "));
-  console.log(chalk.gray("  ") + chalk.cyan("[SYSTEM]") + chalk.white(" You can now access the dashboard at ") + chalk.underline(settings.api.client.oauth2.link + "/"));
+  console.log(chalk.gray("  ") + chalk.cyan("[Heliactyl]") + chalk.white(" Checking for updates..."));
+
+  try {
+    const settingsPath = __dirname + '/settings.json';
+    const settingsContent = fs.readFileSync(settingsPath, 'utf-8');
+    const settings = JSON.parse(settingsContent);
+
+    const response = await axios.get(`https://api.github.com/repos/OvernodeProjets/Heliactyl-fixed/releases/latest`);
+    const latestVersion = response.data.tag_name;
+
+    if (latestVersion !== settings.version) {
+      console.log(chalk.gray("  ") + chalk.cyan("[Heliactyl]") + chalk.yellow(" New version available!"));
+      console.log(chalk.gray("  ") + chalk.cyan("[Heliactyl]") + chalk.white(` Current Version: ${settings.version}, Latest Version: ${latestVersion}`));
+    } else {
+      console.log(chalk.gray("  ") + chalk.cyan("[Heliactyl]") + chalk.white(" Your application is up-to-date."));
+    }
+  } catch (error) {
+    console.error(chalk.gray("  ") + chalk.cyan("[Heliactyl]") + chalk.red(" Error checking for updates:"), error.message);
+  }
+  console.log(chalk.gray("  ") + chalk.cyan("[Heliactyl]") + chalk.white(" You can now access the dashboard at ") + chalk.underline(settings.api.client.oauth2.link + "/"));
+
 });
 
 var cache = false;
@@ -175,7 +196,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
       delete req.session.password;
       if (!req.session.userinfo || !req.session.pterodactyl) {
         if (err) {
-          console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
+          console.log(chalk.red(`[Heliactyl] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -192,7 +213,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
       );
       if (await cacheaccount.statusText == "Not Found") {
         if (err) {
-          console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
+          console.log(chalk.red(`[Heliactyl] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -203,7 +224,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
       req.session.pterodactyl = cacheaccountinfo.attributes;
       if (cacheaccountinfo.attributes.root_admin !== true) {
         if (err) {
-          console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
+          console.log(chalk.red(`[Heliactyl] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -218,7 +239,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
         delete req.session.newaccount;
         delete req.session.password;
         if (err) {
-          console.log(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`);
+          console.log(`[Heliactyl] An error has occured on path ${req._parsedUrl.pathname}:`);
           console.log(err);
           return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
         };
@@ -237,7 +258,7 @@ if (newsettings.api.arcio.enabled == true) req.session.arcsessiontoken = Math.ra
     delete req.session.newaccount;
     delete req.session.password;
     if (err) {
-      console.log(chalk.red(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`));
+      console.log(chalk.red(`[Heliactyl] An error has occured on path ${req._parsedUrl.pathname}:`));
       console.log(err);
       return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
     };
