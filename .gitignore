@@ -1,6 +1,9 @@
-# Ignore node_modules
+# Inside .gitignore
 node_modules/
-# Ignore database.sqlite
 database.sqlite
-# Ignore settings.json
 settings.json
+
+
+# Other
+git add .gitignore
+git commit -m "Update .gitignore to ignore specified files"
