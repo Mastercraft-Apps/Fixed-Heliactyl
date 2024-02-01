@@ -1,5 +1,5 @@
 {
-  "version": "12.7.7",
+  "version": "12.7.8",
   "name": "Heliactyl",
   "letter": "H",
   "icon": "https://cdn.discordapp.com/attachments/1063585626022223892/1065305275826966609/Screenshot_2023-01-18_162220.jpg",
@@ -184,7 +184,7 @@
             "cpu": null
           },
           "info": {
-            "egg": 1,
+            "egg": 4,
             "docker_image": "ghcr.io/pterodactyl/yolks:java_17",
             "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
             "environment": {
@@ -210,7 +210,7 @@
             "cpu": null
           },
           "info": {
-            "egg": 3,
+            "egg": 1,
             "docker_image": "ghcr.io/pterodactyl/yolks:java_17",
             "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
             "environment": {
@@ -289,6 +289,7 @@
       "user": {
       "signup": true,
       "created server": true,
+      "deleted server": true,
       "coupon redeemed": true,
       "gifted coins": true,
       "modify server": true,

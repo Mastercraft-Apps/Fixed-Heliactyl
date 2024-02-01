@@ -1,10 +1,3 @@
-//
-// Heliactyl 12.7, Codename Gekyume
-// 
-//  * Copyright SrydenCloud Limited & Pine Platforms Ltd
-//  * Please read the "License" file
-//
-
 "use strict";
 
 // Load packages.

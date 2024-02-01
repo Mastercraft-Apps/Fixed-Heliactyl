@@ -16,7 +16,7 @@
 
            <h2>Dashboard</h2>
            <p class="text-gray">View your resources & other things here.</p>
-
+           
             <%- include('./components/alert') %>
             <% if (req.query.err == "ALREADY_OPEN") { %>
                 <div class="alert">
@@ -76,32 +76,34 @@
                               <th> CPU </th>
                               <th> RAM </th>
                               <th> Disk </th>
-                              <th style="position: relative; left: 50px;"> Options </th>
+                              <th> Options </th>
                             </tr>
                           </thead>
                           <tbody>
-                              <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+                            <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+                              <tr>
+                                <td> You do not own any servers! Why not create one? </td>
+                              </tr>
+                            <% } else { %>
+                              <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
                                 <tr>
-                                  <td> You do not own any servers! Why not create one? </td>
-                                </tr>
-                              <% } else { %>
-                                <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
-                                  <tr>
+                                  <td>
+                                    <span class="pl-2"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></span>
+                                  </td>
+                                  <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu %>% </td>
+                                  <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory %>MB </td>
+                                  <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk %>MB </td>
                                     <td>
-                                      <span class="pl-2"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 40 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 40) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></span>
-                                    </td>
-                                    <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu %>% </td>
-                                    <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory %>MB </td>
-                                    <td> <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk %>MB </td>
-                                    <td>
-                                      <a role="button" class="badge badge-outline-green" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
-                                    </td>
-                                    <td>
-                                      <a role="button" class="badge badge-outline-red" onclick="if (confirm('Are you sure you want to delete the server? This action is irreversible.')) { window.location.href='/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }">Delete</a>
+                                      <div class="btn-g">
+                                        <a role="button" class="badge badge-background-blue" href="/panel">Link</a>
+                                        <a role="button" class="badge badge-background-green" href="/renew?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Renew</a>
+                                        <a role="button" class="badge badge-background-orange" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
+                                        <a role="button" class="badge badge-background-red" onclick="if (confirm('Are you sure you want to delete the server? This action is irreversible.')) { window.location.href='/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }">Delete</a>
+                                      </div>
                                     </td>
                                   </tr>
-                                <% } %>
                               <% } %>
+                            <% } %>                            
                           </tbody>
                         </table>
                       </div>

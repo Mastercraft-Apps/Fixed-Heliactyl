@@ -16072,58 +16072,99 @@ code {
   color: #e4eaec;
   border: 1px solid #e4eaec; }
 
-.badge-outline-green {
+  .badge-outline-info {
+    color: #8f5fe8;
+    border: 1px solid #8f5fe8; }
+  
+  .badge-outline-warning {
+    color: #ffab00;
+    border: 1px solid #ffab00; }
+  
+  .badge-outline-danger {
+    color: #fc424a;
+    border: 1px solid #fc424a; }
+  
+  .badge-outline-light {
+    color: #ffffff;
+    border: 1px solid #ffffff; }
+  
+  .badge-outline-dark {
+    color: #0d0d0d;
+    border: 1px solid #0d0d0d; }
+
+  
+/*Badge background variations*/
+
+.badge-background-blue {
+  color: white;
+  background-color: #0090e7;
+  border: 1px; 
+  transition-duration: 0.1s;
+}
+
+.badge-background-blue:hover {
+  color: white;
+  background-color: #00569c;
+  border: 1px;
+  transition-duration: 0.1s;
+}
+
+.badge-background-green {
   color: white;
   background-color: #00d25b;
   border: 1px; 
   transition-duration: 0.1s;
 }
 
-.badge-outline-green:hover {
+.badge-background-green:hover {
   color: white;
   background-color: #00d25b;
   border: 1px;
   transition-duration: 0.1s;
 }
 
-.badge-outline-red {
+.badge-background-orange {
+  color: white;
+  background-color: #ffA500; 
+  border: 1px; 
+  transition-duration: 0.1s;
+}
+
+.badge-background-orange:hover {
+  color: white;
+  background-color: #bd7e00; 
+  border: 1px;
+  transition-duration: 0.1s;
+}
+
+.badge-background-red {
   color: white;
   background-color: #ff0000;
   border: 1px; 
   transition-duration: 0.1s;
 }
 
-.badge-outline-red:hover {
+.badge-background-red:hover {
   color: white;
   background-color: #bd0000;
   border: 1px;
   transition-duration: 0.1s;
 }
 
-.badge-outline-info {
-  color: #8f5fe8;
-  border: 1px solid #8f5fe8; }
 
-.badge-outline-warning {
-  color: #ffab00;
-  border: 1px solid #ffab00; }
+/* Buttons */
 
-.badge-outline-danger {
-  color: #fc424a;
-  border: 1px solid #fc424a; }
+.btn-g {
+  margin-right: -15px; 
+}
 
-.badge-outline-light {
-  color: #ffffff;
-  border: 1px solid #ffffff; }
-
-.badge-outline-dark {
-  color: #0d0d0d;
-  border: 1px solid #0d0d0d; }
+.btn-g a {
+  margin-right: 8px;
+}
 
 .btn-primary {
   border-radius: 12px; }
 
-/* Buttons */
 .btn, .fc button, .ajax-upload-dragdrop .ajax-file-upload, .swal2-modal .swal2-buttonswrapper .swal2-styled, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-confirm, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-cancel, .wizard > .actions a {
   font-size: 0.9375rem;
   line-height: 1;

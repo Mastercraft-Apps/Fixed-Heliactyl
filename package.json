@@ -1,6 +1,6 @@
 {
-  "name": "Heliactyl",
-  "version": "12.7.7",
+  "name": "heliactyl",
+  "version": "12.7.8",
   "description": "The best Pterodactyl client area.",
   "main": "index.js",
   "author": "Heliactyl-Fixed",

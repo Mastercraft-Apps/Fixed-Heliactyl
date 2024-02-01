@@ -364,13 +364,20 @@ module.exports.load = async function (app, db) {
       let ok = await deletionresults.ok;
       if (ok !== true) return res.send("An error has occur while attempting to delete the server.");
       let pterodactylinfo = req.session.pterodactyl;
+
       pterodactylinfo.relationships.servers.data = pterodactylinfo.relationships.servers.data.filter(server => server.attributes.id.toString() !== req.query.id);
       req.session.pterodactyl = pterodactylinfo;
 
       await db.delete(`lastrenewal-${req.query.id}`)
 
       adminjs.suspend(req.session.userinfo.id);
-
+      const deletedServer = pterodactylinfo.relationships.servers.data.find(server => server.attributes.id.toString() === req.query.id);
+      if (deletedServer && deletedServer.attributes) {
+        log('deleted server', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} deleted server ${deletedServer.attributes.name}.`);
+      } else {
+        log('deleted server', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} deleted server with unknown name.`);
+      };
+      
       return res.redirect('/servers?err=DELETEDSERVER');
     } else {
       res.redirect(theme.settings.redirect.deleteserverdisabled ? theme.settings.redirect.deleteserverdisabled : "/");
