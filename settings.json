@@ -15,7 +15,7 @@
   },
   "pterodactyl": {
     "domain": "https://panel.overnode.fr/",
-    "key": "ptla_1Os15GoHN9a2mge0gJAthExPIBLpDsMX5fxciYplKxR",
+    "key": "ptla_Ug8Ke2dQN6omsKGEVwUBua7FlU2qnA7CjBsX0p5Wz2v",
     "account_key": "ptlc_0Y5VB5KCWjATUntSUh4k1GgLQE4MXBsik46sXpF24cJ"
   },
   "linkvertise": {
@@ -86,7 +86,7 @@
         ]
       },
       "bot": {
-        "token": "MTE3NTgzNjgwODMyODc5MDA1Ng.Gti95q.U-yY3OfKA0oI02YaynnsBYkYlItTvc7PeuOooA",
+        "token": "MTE3NTgzNjgwODMyODc5MDA1Ng.GsH_jg.MnXCRnAuHhyj2jIT5jmBAIqc123pAt-RKreTsE",
         "joinguild": {
           "_comment": "The Discord bot must be on these servers and have invite permissions. Automatic guild joining will not work unless role packages are configured correctly. You can always just set it to a random role & package so that only this works.",
           "enabled": false,

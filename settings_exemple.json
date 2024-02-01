@@ -305,6 +305,7 @@
         "set plan": true,
         "create coupon": true,
         "revoke coupon": true,
+        "_note": "Remove account hasn't been defined so it's useless but I'll add a system to use it.",
         "remove account": true,
         "view ip": true
       }
@@ -314,6 +315,6 @@
     "_comment": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Heliactyl will disable antivpn.",
     "status": false,
     "APIKey": "Proxycheck APIKey",
-    "whitelistedIPs": ["IP address"]
+    "whitelistedIPs": ["IP address, IP address"]
   }
 }
