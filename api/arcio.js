@@ -31,8 +31,8 @@ module.exports.load = async function(app, db) {
 
   app.get("/arcioerror", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
-    let theme = indexjs.get(req);
-    res.redirect(theme.settings.redirect.arcioerror + (req.query.err ? ("?arcioerr=" + req.query.err) : ""));
+
+  res.redirect("/dashboard" + ("?arcioerr=" + req.query.err));
   });
 
   app.ws("/" + settings.api.arcio["afk page"].path, async (ws, req) => {

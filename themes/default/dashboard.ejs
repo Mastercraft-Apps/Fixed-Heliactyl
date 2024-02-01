@@ -18,11 +18,7 @@
            <p class="text-gray">View your resources & other things here.</p>
            
             <%- include('./components/alert') %>
-            <% if (req.query.err == "ALREADY_OPEN") { %>
-                <div class="alert">
-                	You can't open multiple tabs!
-            	</div>
-            <% } else if (req.query.err === "CANNOTAFFORDRENEWAL") { %>
+            <% if (req.query.err === "CANNOTAFFORDRENEWAL") { %>
               <div class="alert" style="background-color: #007fcc; border-radius: 15px;">
                 You need at least <%= settings.renewals.cost %> coins to purchase a server renewal!
             </div>
