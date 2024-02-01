@@ -9,7 +9,6 @@ module.exports.load = async function(app, db) {
     let theme = indexjs.get(req);
 
     let code = req.query.code ? req.query.code.slice(0, 200) : Math.random().toString(36).substring(2, 15);
-    let name = req.query.name 
 
     if (!code) return res.redirect(theme.settings.redirect.missingorinvalidcouponcode + "?err=MISSINGCOUPONCODE");
 
@@ -21,8 +20,7 @@ module.exports.load = async function(app, db) {
       disk: x,
       cpu: x,
       servers: x,
-      coins: x,
-      name: name
+      coins: x
     }
     */
 
@@ -59,11 +57,5 @@ module.exports.load = async function(app, db) {
     log(`coupon redeemed`, `${req.session.userinfo.username}#${req.session.userinfo.discriminator} redeemed the coupon code \`${code}\` which gives:\`\`\`coins: ${coins}\nMemory: ${ram} MB\nDisk: ${disk} MB\nCPU: ${cpu}%\nServers: ${servers}\`\`\``);
 
     res.redirect(theme.settings.redirect.successfullyredeemedcoupon + "?err=SUCCESSCOUPONCODE");
-
-    let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
   });
-}
-
-function hexToDecimal(hex) {
-  return parseInt(hex.replace("#",""), 16)
 }

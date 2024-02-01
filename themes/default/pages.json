@@ -42,6 +42,7 @@
     },
     "pages": {
         "dashboard": "dashboard.ejs",
+        "servers": "servers.ejs",
         "servers/new": "create.ejs",
         "servers/edit": "edit.ejs",
         "admin": "admin.ejs",
@@ -57,18 +58,21 @@
         "buy": "buy.ejs",
         "afk": "afk.ejs",
         "store": "store.ejs",
-        "servers": "servers.ejs",
         "lv": "lv.ejs"
     },
     "mustbeloggedin": [
         "/dashboard",
+        "/servers",
         "/servers/new",
         "/servers/edit",
+        "/redeem",
         "/settings",
+        "/gift-coins",
+        "/gift-resources",
         "/j4r",
-        "/gift",
+        "/buy",
+        "/afk",
         "/store",
-        "/coins",
         "/lv"
     ],
     "mustbeadmin": [
@@ -79,7 +83,6 @@
         "/admin/coins"
     ],
     "variables": {
-        "faviconlink": "https://cdn.discordapp.com/attachments/1063585626022223892/1065305275826966609/Screenshot_2023-01-18_162220.jpg",
         "home": {
             "_comment": "Name & Icon have been moved to settings.json in Heliactyl 12.5.0",
             "admin": "admin",

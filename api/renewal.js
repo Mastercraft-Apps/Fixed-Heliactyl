@@ -4,7 +4,6 @@ const getAllServers = require('../misc/getAllServers')
 const fetch = require('node-fetch')
 
 module.exports.load = async function (app, db) {
-
     app.get(`/api/renewalstatus`, async (req, res) => {
         if (!settings.renewals.status) return res.json({ error: true })
         if (!req.query.id) return res.json({ error: true })
@@ -81,7 +80,6 @@ module.exports.load = async function (app, db) {
         }
     }, null, true, settings.timezone)
         .start()
-
 };
 
 function msToDaysAndHours(ms) {
@@ -91,14 +89,8 @@ function msToDaysAndHours(ms) {
     const days = Math.floor(ms / msInDay)
     const hours = Math.round((ms - (days * msInDay)) / msInHour * 100) / 100
 
-    let pluralDays = `s`
-    if (days === 1) {
-        pluralDays = ``
-    }
-    let pluralHours = `s`
-    if (hours === 1) {
-        pluralHours = ``
-    }
+    let pluralDays = (days === 1) ? '' : 's';
+    let pluralHours = (hours === 1) ? '' : 's';    
 
     return `${days} day${pluralDays} and ${hours} hour${pluralHours}`
 }

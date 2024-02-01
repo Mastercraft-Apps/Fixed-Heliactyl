@@ -1,5 +1,6 @@
 # Ignore node_modules
 node_modules/
-
+# Ignore database.sqlite
+database.sqlite
 # Ignore settings.json
 settings.json

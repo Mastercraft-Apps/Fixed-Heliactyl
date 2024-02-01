@@ -36,18 +36,13 @@ module.exports.load = async function(app, db) {
         })
       }
     );
-
-    let theme = indexjs.get(req);
     res.redirect("/settings")
   });
 };
 
 function makeid(length) {
-  let result = '';
-  let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-     result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let result = Array.from({ length }, () => characters.charAt(Math.floor(Math.random() * charactersLength))).join('');
   return result;
 }

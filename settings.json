@@ -14,9 +14,9 @@
     "secret": "Default Secret (Change this to any string you want)"
   },
   "pterodactyl": {
-    "domain": "https://panel.example.com",
-    "key": "ptla_0000000000000000000000000000000000000000000",
-    "account_key": "ptlc_0000000000000000000000000000000000000000000"
+    "domain": "https://panel.overnode.fr/",
+    "key": "ptla_1Os15GoHN9a2mge0gJAthExPIBLpDsMX5fxciYplKxR",
+    "account_key": "ptlc_0Y5VB5KCWjATUntSUh4k1GgLQE4MXBsik46sXpF24cJ"
   },
   "linkvertise": {
     "userid": "50000",
@@ -55,12 +55,11 @@
     "admin": true,
     "logout": true
   },
-  "adsense": {
-    "_devcomment": "Doesn't work, i will add soon",
-    "_comment": "This feature facilitates the integration of AdSense, adsterra, and other similar applications into Heliactyl.",
-    "enabled": false,
-    "script": "Add your AdSense links here."
-  },
+    "adsense": {
+     "_comment": "This feature facilitates the integration of AdSense, adsterra, and other similar applications into Heliactyl.",
+     "enabled": true,
+     "script": "Add your AdSense links here."
+    },
 
   "database": "sqlite://database.sqlite",
   "api": {
@@ -87,7 +86,7 @@
         ]
       },
       "bot": {
-        "token": "Discord bot token here",
+        "token": "MTE3NTgzNjgwODMyODc5MDA1Ng.Gti95q.U-yY3OfKA0oI02YaynnsBYkYlItTvc7PeuOooA",
         "joinguild": {
           "_comment": "The Discord bot must be on these servers and have invite permissions. Automatic guild joining will not work unless role packages are configured correctly. You can always just set it to a random role & package so that only this works.",
           "enabled": false,
@@ -119,9 +118,9 @@
       },
       "oauth2": {
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
-        "id": "0000000000000000000",
-        "secret": "0000000000000000000000000000",
-        "link": "https://client.example.com",
+        "id": "1175836808328790056",
+        "secret": "Qj13wkEMOjHigkjD6oCcjuA-T-7E57_V",
+        "link": "http://127.0.0.1:25002",
         "callbackpath": "/callback",
         "prompt": true,
         "ip": {
@@ -283,8 +282,8 @@
     "delay": 14
   },
   "logging": {
-    "status": false,
-    "webhook": "Webhook URL",
+    "status": true,
+    "webhook": "https://discord.com/api/webhooks/1202529283185319937/YcCIkheD6eWbFOnrbO0QMI68JtZWAtpT58J3jVZZbfsGY4pm8pmJn4giXYaPaVCzRJEa",
     "actions": {
       "user": {
       "signup": true,
@@ -305,6 +304,7 @@
         "set plan": true,
         "create coupon": true,
         "revoke coupon": true,
+        "_note": "Remove account hasn't been defined so it's useless but I'll add a system to use it.",
         "remove account": true,
         "view ip": true
       }
@@ -314,6 +314,6 @@
     "_comment": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Heliactyl will disable antivpn.",
     "status": false,
     "APIKey": "Proxycheck APIKey",
-    "whitelistedIPs": ["IP address"]
+    "whitelistedIPs": ["IP address, IP address"]
   }
 }

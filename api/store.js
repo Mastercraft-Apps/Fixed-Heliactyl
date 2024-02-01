@@ -6,10 +6,6 @@ const ejs = require("ejs");
 const log = require('../misc/log')
 
 module.exports.load = async function(app, db) {
-  let maxram = null;
-  let maxcpu = null;
-  let maxservers = null;
-  let maxdisk = null;
   app.get("/buyram", async (req, res) => {
     let newsettings = await enabledCheck(req, res);
     if (newsettings) {
