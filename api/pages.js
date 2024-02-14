@@ -5,6 +5,7 @@ const settings = require("../settings.json");
 const fetch = require('node-fetch');
 const arciotext = "../misc/arciotext.js";
 
+
 module.exports.load = async function(app, db) {
   app.all("/", async (req, res) => {
     if (req.session.pterodactyl) if (req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) return res.redirect("/login?prompt=none")

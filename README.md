@@ -1,4 +1,4 @@
-![Heliactyl](https://cdn.discordapp.com/attachments/1063585626022223892/1065304573058764850/PylexPlus_2.png)
+![Heliactyl](https://github.com/OvernodeProjets/Heliactyl-fixed/assets/73477238/fe5aaf5c-1c01-4145-b37a-b91b184354b5)
 
 <hr>
 
