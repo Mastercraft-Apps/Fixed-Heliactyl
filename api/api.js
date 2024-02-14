@@ -394,6 +394,7 @@ app.post("/api/createcoupon", async (req, res) => {
       db.set("extra-" + req.session.userinfo.id, extra1)
       db.set("extra-" + req.query.id, extra2)
 
+      log('gifted resources', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} sent resources to the user with ID \`${req.query.id}\`:\n\`\`\`Memory: ${ramstring} RAM\nDisk: ${diskstring} Disk\nCPU: ${cpustring} CPU\nServers: ${serversstring} Servers\`\`\``);
       return res.redirect(`/gift-resources?err=none`);
     }
   });

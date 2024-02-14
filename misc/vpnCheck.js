@@ -1,5 +1,4 @@
 const fetch = require('node-fetch')
-const ejs = require("ejs");
 const { renderFile } = require('ejs')
 let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
 

@@ -7,6 +7,18 @@ module.exports.load = async function(app, db) {
     res.redirect(settings.pterodactyl.domain);
   });
 
+  app.get("/updateinfo", async (req, res) => {
+    if (!req.session.pterodactyl) return res.redirect("/login");
+    const cacheaccount = await getPteroUser(req.session.userinfo.id, db)
+      .catch(() => {
+        return res.send("An error has occured while attempting to update your account information and server list.");
+      })
+    if (!cacheaccount) return
+    req.session.pterodactyl = cacheaccount.attributes;
+    if (req.query.redirect) if (typeof req.query.redirect == "string") return res.redirect("/" + req.query.redirect);
+    res.redirect("/settings");
+  });
+
   app.get("/regen", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
     

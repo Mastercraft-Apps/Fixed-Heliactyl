@@ -292,6 +292,7 @@
       "deleted server": true,
       "coupon redeemed": true,
       "gifted coins": true,
+      "gifted resources": true,
       "modify server": true,
       "server purchased": true,
       "ram purchased": true,

@@ -1,5 +1,4 @@
 const indexjs = require("../index.js");
-const fs = require("fs");
 const log = require('../misc/log')
 
 module.exports.load = async function(app, db) {
@@ -38,15 +37,10 @@ module.exports.load = async function(app, db) {
     // Assign values to the variables
     let { ram, disk, cpu, servers, coins } = couponinfo;
 
-    if (ram) extra.ram = extra.ram + ram;
-    if (disk) extra.disk = extra.disk + disk;
-    if (cpu) extra.cpu = extra.cpu + cpu;
-    if (servers) extra.servers = extra.servers + servers;
-
-    if (extra.ram > 999999999999999) extra.ram = 999999999999999;
-    if (extra.disk > 999999999999999) extra.disk = 999999999999999;
-    if (extra.cpu > 999999999999999) extra.cpu = 999999999999999;
-    if (extra.servers > 999999999999999) extra.servers = 999999999999999;
+    extra.ram = Math.min(extra.ram + (ram || 0), 999999999999999);
+    extra.disk = Math.min(extra.disk + (disk || 0), 999999999999999);
+    extra.cpu = Math.min(extra.cpu + (cpu || 0), 999999999999999);
+    extra.servers = Math.min(extra.servers + (servers || 0), 999999999999999);
 
     await db.set("extra-" + req.session.userinfo.id, extra);
 
