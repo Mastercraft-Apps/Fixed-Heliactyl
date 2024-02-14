@@ -12,7 +12,6 @@
     "@keyv/sqlite": "^3.5.2",
     "axios": "^1.6.0",
     "chalk": "^4.1.0",
-    "credit-card-validate": "^0.9.3",
     "cron": "^1.8.2",
     "discord.js": "^12.5.3",
     "ejs": "^3.1.9",
@@ -24,8 +23,7 @@
     "node-cache": "^5.1.2",
     "node-fetch": "^2.6.6",
     "nodemon": "^3.0.3",
-    "stripe": "^9.4.0",
-    "warn": "^1.0.1"
+    "stripe": "^9.4.0"
   },
   "scripts": {
     "start": "nodemon index.js"

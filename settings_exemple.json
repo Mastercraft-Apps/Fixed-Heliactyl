@@ -316,6 +316,6 @@
     "_comment": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Heliactyl will disable antivpn.",
     "status": false,
     "APIKey": "Proxycheck APIKey",
-    "whitelistedIPs": ["IP address, IP address"]
+    "whitelistedIPs": ["IP address", "IP address"]
   }
 }
