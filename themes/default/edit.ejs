@@ -2,7 +2,6 @@
 <html lang="en">
   <%- include('./components/head') %>
   <body>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <%- include('./components/sidebar') %>
@@ -26,10 +25,6 @@
                     There has been an error while attempting to modifying your server. Please alert an administrator to fix this problem.
                 <% } else if (req.query.err == "MISSINGEGG") { %>
                     The server type for this server is not registered as a valid server type, therefore your server's RAM, disk and/or CPU could not be changed.
-                <% } else if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
-                  You must complete the captcha to prove you are human!
-                <% } else if (req.query.err == "INVALIDCAPTCHARESPONSE") { %>
-                  You submitted an invalid captcha response, try again.
                 <% } else { %>
                     <% if (req.query.num) { %>
                         <% if (!isNaN(parseFloat(req.query.num))) { %>
@@ -67,6 +62,7 @@
                 <% } %>
             </div>
         <% } %>
+
         <% if (req.query.id) { %>
             <% if (pterodactyl.relationships.servers.data.filter(name => name.attributes.id == req.query.id).length == 1) {
                 let serverinfo = pterodactyl.relationships.servers.data.filter(name => name.attributes.id == req.query.id)[0];
@@ -80,6 +76,7 @@
                 };
                 let egginfo = attemptegg ? attemptegg.display : "???";
             %>
+            
             <div class="row">
               <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">

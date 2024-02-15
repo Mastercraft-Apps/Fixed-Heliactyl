@@ -12,12 +12,12 @@ global.Buffer = global.Buffer || require('buffer').Buffer;
 
 if (typeof btoa === 'undefined') {
   global.btoa = function (str) {
-    return new Buffer(str, 'binary').toString('base64');
+    return new Buffer.from(str, 'binary').toString('base64');
   };
 }
 if (typeof atob === 'undefined') {
   global.atob = function (b64Encoded) {
-    return new Buffer(b64Encoded, 'base64').toString('binary');
+    return new Buffer.from(b64Encoded, 'base64').toString('binary');
   };
 }
 
@@ -119,16 +119,13 @@ const listener = app.listen(settings.website.port, async function() {
   console.log(chalk.gray("  ") + chalk.cyan("[Heliactyl]") + chalk.white(" Checking for updates..."));
 
   try {
-    const settingsPath = __dirname + '/settings.json';
-    const settingsContent = fs.readFileSync(settingsPath, 'utf-8');
-    const settings = JSON.parse(settingsContent);
-
+    let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));;
     const response = await axios.get(`https://api.github.com/repos/OvernodeProjets/Heliactyl-fixed/releases/latest`);
     const latestVersion = response.data.tag_name;
 
-    if (latestVersion !== settings.version) {
+    if (latestVersion !== newsettings.version) {
       console.log(chalk.gray("  ") + chalk.cyan("[Heliactyl]") + chalk.yellow(" New version available!"));
-      console.log(chalk.gray("  ") + chalk.cyan("[Heliactyl]") + chalk.white(` Current Version: ${settings.version}, Latest Version: ${latestVersion}`));
+      console.log(chalk.gray("  ") + chalk.cyan("[Heliactyl]") + chalk.white(` Current Version: ${newsettings.version}, Latest Version: ${latestVersion}`));
     } else {
       console.log(chalk.gray("  ") + chalk.cyan("[Heliactyl]") + chalk.white(" Your application is up-to-date."));
     }

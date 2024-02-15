@@ -90,11 +90,6 @@
     <script src="/assets/vendors/select2/select2.min.js"></script>
     <script src="/assets/vendors/typeahead.js/typeahead.bundle.min.js"></script>
     <script>
-        async function submitPlan() {
-            let id = encodeURIComponent(document.getElementById("IDPlan").value);
-            let packagename = encodeURIComponent(document.getElementById("package").value);
-            window.location.href = "/setplan?id=" + id + "&package=" + packagename
-        }
         async function submitSet() {
             let id = encodeURIComponent(document.getElementById("IDSet").value);
             let cpu = encodeURIComponent(document.getElementById("SetCPU").value * 100);

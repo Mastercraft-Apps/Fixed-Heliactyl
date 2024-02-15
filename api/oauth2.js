@@ -13,8 +13,6 @@ if (settings.pterodactyl.domain.slice(-1) == "/")
 
 const indexjs = require("../index.js");
 const log = require('../misc/log')
-
-const fs = require("fs");
 const { renderFile } = require('ejs');
 const fetch = require('node-fetch');
 const vpnCheck = require("../misc/vpnCheck");

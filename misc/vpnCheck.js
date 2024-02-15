@@ -2,7 +2,7 @@ const fetch = require('node-fetch')
 const { renderFile } = require('ejs')
 let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
 
-module.exports = (key, db, ip, res) => {
+module.exports = (key, db, ip) => {
     return new Promise(async resolve => {
         let ipcache = await db.get(`vpncheckcache-${ip}`)
         if (!ipcache) {
@@ -22,7 +22,7 @@ module.exports = (key, db, ip, res) => {
                         extra: { home: { name: 'VPN Detected' } }
                     },
                     null,
-                    (err, str) => {
+                    (err) => {
                         if (err) return renderFile(`./themes/default/alerts/vpn.ejs`);
                     }
                 )

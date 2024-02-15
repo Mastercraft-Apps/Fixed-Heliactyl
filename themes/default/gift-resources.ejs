@@ -2,7 +2,6 @@
 <html lang="en">
   <%- include('./components/head') %>
   <body>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <div class="container-scroller">
       <!-- partial:partials/_sidebar.html -->
       <%- include('./components/sidebar') %>
@@ -23,10 +22,6 @@
                     You must fill out all fields in the form.
                 <% } else if (req.query.err == "CANNOTGIFTYOURSELF") { %>
                     You cannot gift coins to yourself -_-
-                <% } else if (req.query.err == "MUSTCOMPLETECAPTCHA") { %>
-                    You must complete the captcha to prove you are human!
-                <% } else if (req.query.err == "INVALIDCAPTCHARESPONSE") { %>
-                    You submitted an invalid captcha response, try again.
                 <% } else if (req.query.err == "CANTAFFORD") { %>
                     You do not have enough coins to gift this amount.
                 <% } else if (req.query.err == "USERDOESNTEXIST") { %>
