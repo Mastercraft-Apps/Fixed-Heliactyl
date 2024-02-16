@@ -43,7 +43,7 @@
   "pages": {
     "_comment": "Category management",
     "dashboard": true,
-    "your server": true,
+    "your servers": true,
     "account settings": true,
     "_comment1": "Category coins & resources",
     "resources store": true,
