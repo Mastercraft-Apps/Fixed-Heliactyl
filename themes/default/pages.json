@@ -84,7 +84,6 @@
     ],
     "variables": {
         "home": {
-            "_comment": "Name & Icon have been moved to settings.json in Heliactyl 12.5.0",
             "admin": "admin",
             "buttontext": {
                 "loggedin": {

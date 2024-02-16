@@ -1,25 +1,33 @@
 class Queue {
     constructor() {
-        this.queue = []
+        this.queue = [];
         this.processing = false;
     }
 
     addJob(job) {
-        this.queue.push(job)
-        this.bumpQueue()
+        this.queue.push(job);
+        if (!this.processing) {
+            this.processQueue();
+        }
     }
 
-    bumpQueue() {
-        if (this.processing) return
-        const job = this.queue.shift()
-        if (!job) return
-        const cb = () => {
-            this.processing = false
-            this.bumpQueue()
+    async processQueue() {
+        if (this.processing) return;
+
+        const job = this.queue.shift();
+        if (!job) return;
+
+        this.processing = true;
+
+        try {
+            await job();
+        } catch (error) {
+            console.error(`Error executing job: ${error}`);
+        } finally {
+            this.processing = false;
+            this.processQueue();
         }
-        this.processing = true
-        job(cb)
     }
 }
 
-module.exports = Queue
+module.exports = Queue;

@@ -7497,7 +7497,8 @@ body {
   line-height: 1.5;
   color: #ffffff;
   text-align: left;
-  background-color: #fff; }
+  background-color: #fff; 
+}
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important; }
@@ -15794,15 +15795,20 @@ code {
   -webkit-transition: all 0.25s ease;
   -ms-transition: all 0.25s ease;
   font-size: calc(0.875rem - 0.05rem);
-  font-weight: 300; }
+  font-weight: 300; 
+  margin-top: auto;
+  
+  }
   .footer a {
     color: #00d25b;
-    font-size: inherit; }
+    font-size: inherit; 
+  }
   @media (max-width: 991px) {
     .footer {
       margin-left: 0;
-      width: 100%; } }
-
+      width: 100%; 
+    } 
+  }
 /* Utilities */
 .grid-margin {
   margin-bottom: 1.5rem; }

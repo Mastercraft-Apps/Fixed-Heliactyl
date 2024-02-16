@@ -35,22 +35,26 @@
     "coins": 100
   },
   "category": {
-    "_comment": "Billing category is a stripe option; if true, you can see the billing category.",
     "management": true,
     "coins & resources": true,
+    "earns": true,
     "miscellaneous": true
   },
   "pages": {
+    "_comment": "Category management",
     "dashboard": true,
     "your server": true,
     "account settings": true,
+    "_comment1": "Category coins & resources",
     "resources store": true,
-    "afk page": true,  
-    "linkvertise": true,
-    "join for rewards": true,
     "gift coins": true,
     "gift resources": true,
     "redeem coupon": true,
+    "_comment2": "Category earns (buy coins is stripe options)",
+    "join for rewards": true,
+    "afk page": true,  
+    "linkvertise": true,
+    "_comment3": "Category miscellaneous",
     "panel": true,
     "admin": true,
     "logout": true
