@@ -15,8 +15,10 @@
 
             <%- include('./components/alert') %>
 
-           <h2>Your Servers</h2>
-           <p class="text-gray">You can edit, delete, create & update servers here.</p>
+           <div class="container mx-auto mt-1 text-center">
+            <h2 style="display: inline-block; border-bottom: 5px solid #191C24; padding-bottom: 10px; max-width: 200px;">Your Servers</h2>
+            <p class="text-gray">You can edit, delete, create & update servers here.</p>
+           </div>
 
             <% if (req.query.err) { %>
               <% if (req.query.err !== "none") { %>

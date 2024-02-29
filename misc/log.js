@@ -1,4 +1,5 @@
 const settings = require('../settings.json')
+
 const fetch = require('node-fetch')
 
 /**

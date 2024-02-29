@@ -9916,17 +9916,19 @@ input[type="button"].btn-block {
   overflow: hidden;
   border-top: 1px solid #2c2e33; }
 
-.dropdown-item {
-  display: block;
-  width: 100%;
-  padding: 0.25rem 1.5rem;
-  clear: both;
-  font-weight: 400;
-  color: #ffffff;
-  text-align: inherit;
-  white-space: nowrap;
-  background-color: transparent;
-  border: 0; }
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #ffffff;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0; 
+    border-radius: 2px;
+  }
   .dropdown-item:hover, .dropdown-item:focus {
     color: #16181b;
     text-decoration: none;
@@ -12805,22 +12807,22 @@ a.close.disabled {
 .align-text-top {
   vertical-align: text-top !important; }
 
-.bg-primary {
-  background-color: #0090e7 !important; }
-
-a.bg-primary:hover, a.bg-primary:focus,
-button.bg-primary:hover,
-button.bg-primary:focus {
-  background-color: #0070b4 !important; }
-
-.bg-secondary {
-  background-color: #e4eaec !important; }
-
-a.bg-secondary:hover, a.bg-secondary:focus,
-button.bg-secondary:hover,
-button.bg-secondary:focus {
-  background-color: #c6d3d7 !important; }
-
+  .bg-primary {
+    background-color: #0090e7 !important; }
+  
+  a.bg-primary:hover, a.bg-primary:focus,
+  button.bg-primary:hover,
+  button.bg-primary:focus {
+    background-color: #0070b4 !important; }
+  
+  .bg-secondary {
+    background-color: #e4eaec !important; }
+  
+  a.bg-secondary:hover, a.bg-secondary:focus,
+  button.bg-secondary:hover,
+  button.bg-secondary:focus {
+    background-color: #c6d3d7 !important; }
+  
 .bg-success, .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-confirm {
   background-color: #00d25b !important; }
 

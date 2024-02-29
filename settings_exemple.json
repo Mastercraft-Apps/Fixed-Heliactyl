@@ -15,8 +15,7 @@
   },
   "pterodactyl": {
     "domain": "https://panel.example.com",
-    "key": "ptla_0000000000000000000000000000000000000000000",
-    "account_key": "ptlc_0000000000000000000000000000000000000000000"
+    "key": "ptla_0000000000000000000000000000000000000000000"
   },
   "linkvertise": {
     "userid": "50000",
@@ -37,24 +36,20 @@
   "category": {
     "management": true,
     "coins & resources": true,
-    "earns": true,
     "miscellaneous": true
   },
   "pages": {
     "_comment": "Category management",
     "dashboard": true,
-    "your server": true,
+    "your servers": true,
     "account settings": true,
-    "_comment1": "Category coins & resources",
+    "_comment1": "Category coins & resources (buy coins is stripe options)",
     "resources store": true,
-    "gift coins": true,
-    "gift resources": true,
     "redeem coupon": true,
-    "_comment2": "Category earns (buy coins is stripe options)",
     "join for rewards": true,
-    "afk page": true,  
+    "afk page": true,
     "linkvertise": true,
-    "_comment3": "Category miscellaneous",
+    "_comment2": "Category miscellaneous",
     "panel": true,
     "admin": true,
     "logout": true
@@ -65,7 +60,6 @@
     "enabled": false,
     "script": "Add your AdSense links here."
   },
-
   "database": "sqlite://database.sqlite",
   "api": {
     "client": {
@@ -99,7 +93,7 @@
             "Guild ID 1"
           ]
         },
-        "giverole":{
+        "giverole": {
           "_comment": "The Discord bot must be on the server. Automatically assign a role to the user when he logs in",
           "enabled": true,
           "guildid": "000000000000000000",
@@ -201,7 +195,7 @@
             }
           }
         },
-       "paper": {
+        "paper": {
           "display": "Minecraft Java | Paper",
           "minimum": {
             "ram": 1024,
@@ -252,21 +246,12 @@
         }
       }
     },
-    "arcio": {
-      "_comment": "This is no longer supported and will be removed in the future. The AFK page has worked without arc.io since v11.4.0.",
+    "afk page": {
       "enabled": true,
-      "widgetid": "none",
-      "afk page": {
-        "_comment": "This will not affect any current arc.io sessions and will require a restart to kick everyone out of the web socket session.",
-        "_comment2": "Make sure coins are enabled if you choose to enable this option!",
-        "enabled": true,
-        "_comment3": "If you change the path, you need to restart for it to take full effect.",
-        "path": "afkwspath",
-        "_comment4": "This afk page will give the users [coins variable] coins every [every variable] seconds.",
-        "every": 60,
-        "_comment5": "The coins variable is meant to not be under 1. There may be bugs if the coins variable is less than 1.",
-        "coins": 1
-      }
+      "_comment": "This afk page will give the users [coins variable] coins every [every variable] seconds.",
+      "every": 5,
+      "_comment1": "The coins variable is meant to not be under 1. There may be bugs if the coins variable is less than 1.",
+      "coins": 1
     }
   },
   "whitelist": {
@@ -291,18 +276,16 @@
     "webhook": "Webhook URL",
     "actions": {
       "user": {
-      "signup": true,
-      "created server": true,
-      "deleted server": true,
-      "coupon redeemed": true,
-      "gifted coins": true,
-      "gifted resources": true,
-      "modify server": true,
-      "server purchased": true,
-      "ram purchased": true,
-      "cpu purchased": true,
-      "disk purchased": true
-      }, 
+        "signup": true,
+        "created server": true,
+        "deleted server": true,
+        "coupon redeemed": true,
+        "modify server": true,
+        "server purchased": true,
+        "ram purchased": true,
+        "cpu purchased": true,
+        "disk purchased": true
+      },
       "admin": {
         "set coins": true,
         "add coins": true,
@@ -321,6 +304,9 @@
     "_comment": "For antivpn to work, generate an apikey on https://proxycheck.io/. If you put no key, Heliactyl will disable antivpn.",
     "status": false,
     "APIKey": "Proxycheck APIKey",
-    "whitelistedIPs": ["IP address", "IP address"]
+    "whitelistedIPs": [
+      "IP address",
+      "IP address"
+    ]
   }
 }

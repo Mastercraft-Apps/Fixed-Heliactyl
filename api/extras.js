@@ -1,6 +1,7 @@
 const settings = require("../settings.json");
 const fs = require('fs');
 const fetch = require('node-fetch');
+const getPteroUser = require('../misc/getPteroUser.js')
 
 module.exports.load = async function(app, db) {
   app.get("/panel", async (req, res) => {

@@ -1,11 +1,13 @@
 const settings = require("../settings.json");
-const fetch = require('node-fetch');
 const indexjs = require("../index.js");
-const adminjs = require("./admin.js");
+const adminjs = require('./admin.js');
+const getPteroUser = require('../misc/getPteroUser.js')
+const Queue = require('../misc/Queue.js')
+const log = require('../misc/log.js')
+
+const fetch = require('node-fetch');
 const fs = require("fs");
-const getPteroUser = require('../misc/getPteroUser')
-const Queue = require('../misc/Queue')
-const log = require('../misc/log')
+
 
 if (settings.pterodactyl) if (settings.pterodactyl.domain) {
   if (settings.pterodactyl.domain.slice(-1) == "/") settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
@@ -194,7 +196,7 @@ module.exports.load = async function (app, db) {
             if (createdStatus) {
               await db.set("coins-" + req.session.userinfo.id, coins - cost)
             }
-
+            
             await db.set(`lastrenewal-${serverinfotext.attributes.id}`, Date.now())
             await db.set(`createdserver-${req.session.userinfo.id}`, true)
 

@@ -11,22 +11,18 @@ class Queue {
         }
     }
 
-    async processQueue() {
-        if (this.processing) return;
+    processQueue() { // bumpQueue Renamed
+        if (this.processing || this.queue.length === 0) return;
 
         const job = this.queue.shift();
-        if (!job) return;
-
         this.processing = true;
 
-        try {
-            await job();
-        } catch (error) {
-            console.error(`Error executing job: ${error}`);
-        } finally {
+        const cb = () => {
             this.processing = false;
             this.processQueue();
-        }
+        };
+
+        job(cb);
     }
 }
 

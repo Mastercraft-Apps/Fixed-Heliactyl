@@ -13,18 +13,20 @@
         <div style="background-color: #111319" class="main-panel">
           <div style="background-color: #111319" class="content-wrapper">
 
-           <h2>Linkvertise</h2>
-           <p class="text-gray">Earn coins by completing Linkvertise links.</p>
-           
+           <div class="container mx-auto mt-1 text-center">
+            <h2 style="display: inline-block; border-bottom: 5px solid #191C24; padding-bottom: 10px; max-width: 200px;">Linkvertise</h2>
+            <p class="text-gray">Earn coins by completing Linkvertise links.</p>
+           </div>
+
             <% if (req.query.success) { %>
               <div class="alert" style="background-color: #00b950; border-radius: 15px;">
                 Success! <%= settings.linkvertise.coins%> coins were added to your account.
             </div>
             <% } %>
             
-              <div class="row">
+              <div class="row justify-content-center">
                 <div class="col-md-6 grid-margin stretch-card">
-                    <div class="card">
+                    <div class="card text-center">
                     <div class="card-body" style="display: none;" id="generate-panel">
                       <p>Every time you complete a linkvertise link, you will earn <%= settings.linkvertise.coins%> coins!<br>Generate a link below:<br><br>
                         <button class="btn btn-primary btn-lg" onclick="generate()">Generate Link</button></p>

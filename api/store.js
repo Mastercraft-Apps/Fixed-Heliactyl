@@ -1,9 +1,10 @@
 const indexjs = require("../index.js");
-const adminjs = require("./admin.js");
+const adminjs = require('./admin.js');
 const settings = require("../settings.json");
+const log = require('../misc/log.js')
+
 const fs = require("fs");
 const ejs = require("ejs");
-const log = require('../misc/log')
 
 module.exports.load = async function(app, db) {
   app.get("/buyram", async (req, res) => {

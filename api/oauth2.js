@@ -13,9 +13,10 @@ if (settings.pterodactyl.domain.slice(-1) == "/")
 
 const indexjs = require("../index.js");
 const log = require('../misc/log')
+const vpnCheck = require("../misc/vpnCheck");
+
 const { renderFile } = require('ejs');
 const fetch = require('node-fetch');
-const vpnCheck = require("../misc/vpnCheck");
 
 
 module.exports.load = async function (app, db) {

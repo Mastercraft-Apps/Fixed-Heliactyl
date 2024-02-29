@@ -2,8 +2,5 @@
 node_modules/
 database.sqlite
 settings.json
-
-
-# Other
-git add .gitignore
-git commit -m "Update .gitignore to ignore specified files"
+package-lock.json
+commit

@@ -1,15 +1,14 @@
+const ejs = require("ejs");
+const fs = require("fs");
+const fetch = require('node-fetch');
 const settings = require("../settings.json");
+const indexjs = require("../index.js");
+const adminjs = require('./admin.js');
+const log = require('../misc/log.js')
 
 if (settings.pterodactyl) if (settings.pterodactyl.domain) {
     if (settings.pterodactyl.domain.slice(-1) == "/") settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
 };
-
-const fetch = require('node-fetch');
-const fs = require("fs");
-const indexjs = require("../index.js");
-const adminjs = require("./admin.js");
-const ejs = require("ejs");
-const log = require('../misc/log')
 
 module.exports.load = async function(app, db) {
     app.get("/setcoins", async (req, res) => {
@@ -418,6 +417,8 @@ module.exports.load = async function(app, db) {
         res.redirect(theme.settings.redirect.couponrevokesuccess + "?revokedcode=true");
     });
 
+    // remove account never used
+
     app.get("/remove_account", async (req, res) => {
         let theme = indexjs.get(req);
 
@@ -482,6 +483,8 @@ module.exports.load = async function(app, db) {
         log(`remove account`, `${req.session.userinfo.username}#${req.session.userinfo.discriminator} removed the account with the ID \`${discordid}\`.`)
         res.redirect(theme.settings.redirect.removeaccountsuccess + "?success=REMOVEACCOUNT");
     });
+
+    // Never used (getip)
     
     app.get("/getip", async (req, res) => {
         let theme = indexjs.get(req);

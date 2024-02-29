@@ -46,53 +46,6 @@
         </li>
     <% } %>
 
-    <% if (settings.page['resources store'] === true) { %>
-    <li class="nav-item menu-items">
-      <a class="nav-link" href="../store">
-        <span class="menu-icon">
-          <i class="mdi mdi-store d-flex justify-content-center align-items-center"></i>
-        </span>
-        <span class="menu-title">Resources Store</span>
-      </a>
-    </li>
-    <% } %>
-    <% if (settings.page['gift coins'] === true) { %>
-    <li class="nav-item menu-items">
-      <a class="nav-link" href="../gift-coins">
-        <span class="menu-icon">
-          <i class="mdi mdi-coin d-flex justify-content-center align-items-center"></i>
-        </span>
-        <span class="menu-title">Gift Coins</span>
-      </a>
-    </li>
-    <% } %>
-    <% if (settings.page['gift resources'] === true) { %>
-    <li class="nav-item menu-items">
-      <a class="nav-link" href="../gift-resources">
-        <span class="menu-icon">
-          <i class="mdi mdi-gift d-flex justify-content-center align-items-center"></i>
-        </span>
-        <span class="menu-title">Gift Resources</span>
-      </a>
-    </li>
-    <% } %>
-    <% if (settings.page['redeem coupon'] === true) { %>
-    <li class="nav-item menu-items">
-      <a class="nav-link" href="../redeem">
-        <span class="menu-icon">
-          <i class="mdi mdi-ticket-percent d-flex justify-content-center align-items-center"></i>
-        </span>
-        <span class="menu-title">Redeem Coupon</span>
-      </a>
-    </li>
-    <% } %>
-
-    <% if (settings.category['earns'] === true) { %>
-     <li class="nav-item nav-category">
-       <span class="nav-link text-white"><h4>Earns</h4></span>
-      </li>
-      <% } %>
-
     <% if (settings.stripe.enabled == true) { %>
       <li class="nav-item menu-items">
         <a class="nav-link" href="../buy">
@@ -103,7 +56,28 @@
         </a>
       </li>
       <% } %>
-      <% if (settings.page['join for rewards'] === true) { %>
+    <% if (settings.pages['resources store'] === true) { %>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="../store">
+        <span class="menu-icon">
+          <i class="mdi mdi-store d-flex justify-content-center align-items-center"></i>
+        </span>
+        <span class="menu-title">Resources Store</span>
+      </a>
+    </li>
+    <% } %>
+    <% if (settings.pages['redeem coupon'] === true) { %>
+    <li class="nav-item menu-items">
+      <a class="nav-link" href="../redeem">
+        <span class="menu-icon">
+          <i class="mdi mdi-ticket-percent d-flex justify-content-center align-items-center"></i>
+        </span>
+        <span class="menu-title">Redeem Coupon</span>
+      </a>
+    </li>
+    <% } %>
+
+      <% if (settings.pages['join for rewards'] === true) { %>
       <li class="nav-item menu-items">
         <a class="nav-link" href="../j4r">
           <span class="menu-icon">
@@ -113,7 +87,7 @@
         </a>
       </li>
       <% } %>
-    <% if (settings.page['afk page'] === true) { %>
+    <% if (settings.pages['afk page'] === true) { %>
     <li class="nav-item menu-items">
       <a class="nav-link" href="../afk">
         <span class="menu-icon">
@@ -123,7 +97,7 @@
       </a>
     </li>
     <% } %>
-    <% if (settings.page['linkvertise'] === true) { %>
+    <% if (settings.pages['linkvertise'] === true) { %>
     <li class="nav-item menu-items">
       <a class="nav-link" href="../lv">
         <span class="menu-icon">
@@ -139,6 +113,17 @@
         </li>
         <% } %>
 
+        <% if (pterodactyl.root_admin == true) { %>
+          <li class="nav-item menu-items">
+          <a class="nav-link" href="../admin">
+            <span class="menu-icon">
+              <i class="mdi mdi-account d-flex justify-content-center align-items-center"></i>
+            </span>
+            <span class="menu-title">Admin</span>
+            </a>
+          </li>
+        <% } %>
+
       <% if (settings.pages['panel'] === true) { %>
       <li class="nav-item menu-items">
         <a class="nav-link" href="../panel">
@@ -150,25 +135,5 @@
       </li>
       <% } %>
 
-      <% if (pterodactyl.root_admin == true) { %>
-        <li class="nav-item menu-items">
-        <a class="nav-link" href="../admin">
-          <span class="menu-icon">
-            <i class="mdi mdi-account d-flex justify-content-center align-items-center"></i>
-          </span>
-          <span class="menu-title">Admin</span>
-          </a>
-        </li>
-      <% } %>
-      <% if (settings.pages['logout'] === true) { %>
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="../logout">
-          <span class="menu-icon">
-            <i class="mdi mdi-logout d-flex justify-content-center align-items-center"></i>
-          </span>
-          <span class="menu-title">Logout</span>
-        </a>
-      </li>
-      <% } %>
     </ul>
   </nav>

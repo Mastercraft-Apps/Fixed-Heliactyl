@@ -6,8 +6,8 @@
 
 All features:
 
-- Resource Management (Use it to create servers, gift them, etc)
-- Coins (AFK Page Earning, Linkvertise earning, Gift them away)
+- Resource Management (Use it to create servers etc)
+- Coins (AFK Page Earning, Linkvertise earning)
 - Renewal (Require coins for renewal)
 - Coupons (which give resources & coins to a user)
 - Servers (create, view, and edit servers)
@@ -67,7 +67,7 @@ To run in the background, use PM2 (see PM2 section)</br>
 
 ## 2. Setting up webserver
 
-<strong>2.1</strong> Configure settings.json (specify panel domain/apikey and discord auth settings for it to work)
+<strong>2.1</strong> Rename exemple_settings.json to settings.json and configure settings.json (specify panel domain/apikey and discord auth settings for it to work)
 
 <strong>2.2</strong> Start the server (Ignore the 2 strange errors that might come up)
 
@@ -105,11 +105,11 @@ server {
     ssl_ciphers  HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers on;
 
-    location /afkwspath {
+    location /afk/ws {
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
-        proxy_pass http://localhost:<port>/afkwspath;
+        proxy_pass http://localhost:<port>/afk/ws;
     }
     location / {
         proxy_pass http://localhost:<port>/;
