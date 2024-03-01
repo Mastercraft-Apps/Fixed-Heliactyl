@@ -42,6 +42,7 @@
         <% } %>
         
         <%- include('./components/status') %>
+        <% if (settings.renewals.status) { %> 
             <div class="row ">
               <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
@@ -52,6 +53,7 @@
                     </div>
                   </div>
                 </div>
+                 
               <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
@@ -62,6 +64,7 @@
                   </div>
                 </div>
               </div>
+              <% } %> 
               <div class="row ">
                 <div class="col-12 grid-margin">
                   <div class="card">
@@ -143,7 +146,9 @@
                                           <!-- Options --> 
                                            <div class="btn-g">
                                                <a role="button" class="badge badge-background-blue" href="/panel">Link</a>
+                                               <% if (settings.renewals.status) { %> 
                                                <a role="button" class="badge badge-background-green" href="/renew?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Renew</a>
+                                               <% } %> 
                                                <a role="button" class="badge badge-background-orange" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit</a>
                                                <a role="button" class="badge badge-background-red" onclick="if (confirm('Are you sure you want to delete the server? This action is irreversible.')) { window.location.href='/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }">Delete</a>
                                            </div>

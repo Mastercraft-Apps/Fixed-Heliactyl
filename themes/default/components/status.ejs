@@ -11,21 +11,27 @@
       }
     %>
 
-  <% if (settings.resources.type == "GB") { %>
+  <% if (settings.resources.typeRessources == "GB") { %>
     <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
       <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-9">
-              <h6 class="card-title text-uppercase text-muted mb-0">YOUR CPU</h6>
-              <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0"><%= cpu/100 %> / <%= packages.cpu/100 + extraresources.cpu/100 %> Core(s)</h3>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-9">
+                      <h6 class="card-title text-uppercase text-muted mb-0">YOUR CPU</h6>
+                      <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">
+                              <% if (settings.resources.typeCPU === "%") { %>
+                                <%= (cpu / 100).toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 })%> / <%= (packages.cpu/100 + extraresources.cpu/100).toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 } ) %>
+                              <% } else { %>
+                                  <%= cpu / 100 %> Core(s)
+                              <% } %>
+                          </h3>
+                      </div>
+                  </div>
               </div>
-            </div>
           </div>
-        </div>
       </div>
-    </div>
+  </div>
     <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">
@@ -71,18 +77,24 @@
   <% } else { %>
     <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
       <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-9">
-              <h6 class="card-title text-uppercase text-muted mb-0">YOUR CPU</h6>
-              <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0"><%= cpu/100 %> / <%= packages.cpu/100 + extraresources.cpu/100 %> Core(s)</h3>
+          <div class="card-body">
+              <div class="row">
+                  <div class="col-9">
+                      <h6 class="card-title text-uppercase text-muted mb-0">YOUR CPU</h6>
+                      <div class="d-flex align-items-center align-self-start">
+                          <h3 class="mb-0">
+                              <% if (settings.resources.typeCPU === "%") { %>
+                                <%= (cpu / 100).toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 })%> / <%= (packages.cpu/100 + extraresources.cpu/100).toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0 } ) %>
+                              <% } else { %>
+                                <h3 class="mb-0"><%= cpu/100 %> / <%= packages.cpu/100 + extraresources.cpu/100 %> Core(s)</h3>
+                              <% } %>
+                          </h3>
+                      </div>
+                  </div>
               </div>
-            </div>
           </div>
-        </div>
       </div>
-    </div>
+  </div>
     <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">

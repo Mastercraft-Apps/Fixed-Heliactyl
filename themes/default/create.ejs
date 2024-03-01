@@ -81,16 +81,16 @@
                         <input style="border-radius: 15px; padding: 8px;" type="text" class="form-control" id="InputName" placeholder="My Server">
                       </div>
                       <div class="form-group">
-                        <label for="InputCPU">CPU (Cores):</label>
-                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputCPU" placeholder="1">
+                        <label for="InputCPU">CPU (<% if (settings.resources.typeCPU == "Core") { %>Cores<% } else { %>%<% } %>):</label>
+                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputCPU" placeholder="<% if (settings.resources.typeCPU == "Core") { %>1<% } else { %>100<% } %>">
                       </div>
                       <div class="form-group">
-                        <label for="InputRAM">RAM (<% if (settings.resources.type == "GB") { %>GBs<% } else { %>MBs<% } %>):</label>
-                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputRAM" placeholder="<% if (settings.resources.type == "GB") { %>2<% } else { %>2048<% } %>">
+                        <label for="InputRAM">RAM (<% if (settings.resources.typeRessources == "GB") { %>GBs<% } else { %>MBs<% } %>):</label>
+                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputRAM" placeholder="<% if (settings.resources.typeRessources == "GB") { %>2<% } else { %>2048<% } %>">
                       </div>
                       <div class="form-group">
-                        <label for="InputDisk">Disk (<% if (settings.resources.type == "GB") { %>GBs<% } else { %>MBs<% } %>):</label>
-                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputDisk" placeholder="<% if (settings.resources.type == "GB") { %>2<% } else { %>2048<% } %>">
+                        <label for="InputDisk">Disk (<% if (settings.resources.typeRessources == "GB") { %>GBs<% } else { %>MBs<% } %>):</label>
+                        <input style="border-radius: 15px; padding: 8px;" type="number" class="form-control" id="InputDisk" placeholder="<% if (settings.resources.typeRessources == "GB") { %>2<% } else { %>2048<% } %>">
                       </div>
                       <div class="form-group">
                         <label for="InputLoc">Location:</label><BR>
@@ -137,14 +137,18 @@
       async function submitNew() {
         let name = encodeURIComponent(document.getElementById("InputName").value);
         let egg = encodeURIComponent(document.getElementById("InputEgg").value);
-        <% if (settings.resources.type == "GB") { %>
+        <% if (settings.resources.typeRessources == "GB") { %>
           let ram = encodeURIComponent(document.getElementById("InputRAM").value * 1024);
           let disk = encodeURIComponent(document.getElementById("InputDisk").value * 1024);
         <% } else { %>
           let ram = encodeURIComponent(document.getElementById("InputRAM").value);
           let disk = encodeURIComponent(document.getElementById("InputDisk").value);
         <% } %>
+        <% if (settings.resources.typeCPU == "Core") { %>
         let cpu = encodeURIComponent(document.getElementById("InputCPU").value * 100);
+        <% } else { %>
+        let cpu = encodeURIComponent(document.getElementById("InputCPU").value);
+        <% } %>
         let location = encodeURIComponent(document.getElementById("InputLoc").value);
         document.location.href = `/create?name=${name}&egg=${egg}&ram=${ram}&disk=${disk}&cpu=${cpu}&location=${location}`;
       };

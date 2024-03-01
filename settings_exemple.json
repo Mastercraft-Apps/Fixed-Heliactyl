@@ -7,7 +7,9 @@
   "timezone": "Europe/Paris",
   "resources": {
     "_comment": "Options: MB, GB. This is only used on the user side, admin will use GB.",
-    "type": "MB"
+    "typeRessources": "MB",
+    "_comment2": "Options: Core, %. This is only used on the userside",
+    "typeCPU": "Core"
   },
   "website": {
     "port": 25002,
@@ -17,7 +19,7 @@
     "domain": "https://panel.example.com",
     "key": "ptla_0000000000000000000000000000000000000000000"
   },
-  "linkvertise": {
+  "linkvertise": {  
     "userid": "50000",
     "coins": 5
   },
@@ -51,8 +53,7 @@
     "linkvertise": true,
     "_comment2": "Category miscellaneous",
     "panel": true,
-    "admin": true,
-    "logout": true
+    "admin": true
   },
   "adsense": {
     "_devcomment": "Doesn't work, i will add soon",
