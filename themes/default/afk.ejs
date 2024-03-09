@@ -38,6 +38,9 @@
                                       document.getElementById("sessionEarn").innerText = `${totalCoins} coins`;
                                       reconnecting = false;
                                   }
+                                  setInterval(() => {
+                                  socket.send(JSON.stringify({})); 
+                                }, );
                               };
 
                               socket.onmessage = (event) => {
