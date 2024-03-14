@@ -2,6 +2,7 @@
   "version": "12.7.9",
   "name": "Heliactyl",
   "letter": "H",
+  "_comment": "For the thumbnail, it's recommended to use an image of size 128x128 pixels.",
   "icon": "https://cdn.discordapp.com/attachments/1063585626022223892/1065305275826966609/Screenshot_2023-01-18_162220.jpg",
   "theme": "default",
   "timezone": "Europe/Paris",
