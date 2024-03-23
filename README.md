@@ -1,10 +1,8 @@
-This is a fork of Heliactyl v12,
-made to maintain this project alive a little longer...
-
 ![Heliactyl](https://github.com/OvernodeProjets/Heliactyl-fixed/assets/73477238/fe5aaf5c-1c01-4145-b37a-b91b184354b5)
 
 <hr>
 
+# This is a fork of Heliactyl v12,
 # Heliactyl • The modern client panel for Pterodactyl
 
 All features:
