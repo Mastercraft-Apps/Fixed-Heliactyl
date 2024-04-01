@@ -45,7 +45,7 @@ module.exports.load = async function(app, db) {
 
     adminjs.suspend(req.session.userinfo.id);
 
-    log(`Resources Purchased`, `${req.session.userinfo.username}#${req.session.userinfo.discriminator} bought ${per} ${resourceName} from the store for \`${cost}\` Credits.`);
+    log(`resources purchased`, `${req.session.userinfo.username}#${req.session.userinfo.discriminator} bought ${per} ${resourceName} from the store for \`${cost}\` Credits.`);
 
     res.redirect((theme.settings.redirect[`purchase${resourceName}`] || "/store") + "?err=none");
   };
