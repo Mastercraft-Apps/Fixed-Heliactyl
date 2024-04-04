@@ -174,4 +174,4 @@ To stop a currently running Heliactyl instance, use `pm2 stop heliactyl`
 > [!CAUTION]
 > # Legacy Deprecation Notice
 > Heliactyl v6, v7, v8, v9, v10, v11, v13, v15 is now deprecated as listed in our Discord and should not be used.
-> Please update to Heliactyl v12.
+> Please update to Heliactyl v12 or use Heliactyl v14.
