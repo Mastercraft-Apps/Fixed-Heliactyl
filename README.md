@@ -21,16 +21,6 @@ All features:
 - Admin (set/add/remove coins & resources, create/revoke coupons)
 - API (for bots & other things)
 
-# What happened to 13.x and 15.x?
-
-Due to major issues with both versions, we've decided to return to V12 and continue.
-The latest versions will be on v12 now.
-
-# Warning
-
-We cannot force you to keep "Powered by Heliactyl" in the footer, but please consider keeping it. It helps to get more visibility for the project, which is getting better. We won't provide technical support for installations without the notice in the footer. We may DMCA the website under certain conditions.
-Please do keep the footer, though.
-
 <hr>
 
 # Install Guide
@@ -124,7 +114,7 @@ server {
 
 # Updating
 
-From Heliactyl v11/v13 or Dashactyl v0.4 to Heliactyl v12:
+### From Heliactyl v11/v13 or Dashactyl v0.4 to Heliactyl v12:
 
 1. Store certain things such as your api keys, discord auth settings, etc in a .txt file
 2. Download database.sqlite
@@ -132,12 +122,12 @@ From Heliactyl v11/v13 or Dashactyl v0.4 to Heliactyl v12:
 4. Upload the latest Heliactyl v12 release and unzip it
 5. Upload database.sqlite and reconfigure settings.json
 
-From Heliactyl v15:
+### From Heliactyl v15:
 
 - This is currently not possible due to major differences between the versions
 - You will have to install Heliactyl v12 and use a new database
 
-Move to a newer Heliactyl v12 release:
+### Move to a newer Heliactyl v12 release:
 
 1. Delete everything except settings.json, database.sqlite
 2. Put the files that you didn't delete into a zip file
@@ -145,19 +135,21 @@ Move to a newer Heliactyl v12 release:
 4. Remove settings.json and database.sqlite
 5. Unzip the zip with your old settings.json and database.sqlite
 
+<hr>
+
 # Running in background / on startup, on a server instead of within Pterodactyl
 
-Installing [pm2](https://github.com/Unitech/pm2):
+### Installing [pm2](https://github.com/Unitech/pm2):
 
 - Run `npm install pm2 -g` on the server
 
-Starting the Dashboard in Background:
+### Starting the Dashboard in Background:
 
 - Change directory to your Heliactyl folder Using `cd` command, Example: `cd /var/www/heliactyl`
 - To run Heliactyl, use `pm2 start index.js --name "heliactyl"`
 - To view logs, run `pm2 logs Heliactyl`
 
-Making the dashboard run on startup:
+### Making the dashboard run on startup:
 
 - Make sure your dashboard is running in the background with the help of [pm2](https://github.com/Unitech/pm2)
 - You can check if Heliactyl is running in the background with `pm2 list`
@@ -167,7 +159,19 @@ Making the dashboard run on startup:
 
 To stop a currently running Heliactyl instance, use `pm2 stop heliactyl`
 
-# Legacy Deprecation Notice
+<br>
 
-Heliactyl v6, v7, v8, v9, v10, v11, v13, v15 is now deprecated as listed in our Discord and should not be used.
-Please update to Heliactyl v12.
+> [!NOTE] 
+> # What happened to 13.x and 15.x?
+> Due to major issues with both versions, we've decided to return to V12 and continue.
+> The latest versions will be on v12 now.
+
+> [!WARNING] 
+> # Warning
+> We cannot force you to keep "Powered by Heliactyl" in the footer, but please consider keeping it. It helps to get more visibility for the project, which is getting better. We won't > provide technical support for installations without the notice in the footer. We may DMCA the website under certain conditions.
+> Please do keep the footer, though.
+
+> [!CAUTION]
+> # Legacy Deprecation Notice
+> Heliactyl v6, v7, v8, v9, v10, v11, v13, v15 is now deprecated as listed in our Discord and should not be used.
+> Please update to Heliactyl v12.
