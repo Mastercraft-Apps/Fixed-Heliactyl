@@ -162,6 +162,7 @@ To stop a currently running Heliactyl instance, use `pm2 stop heliactyl`
 
 <br>
 
+<<<<<<< HEAD
 > [!NOTE]
 >
 > # What happened to 13.x and 15.x?
@@ -173,12 +174,25 @@ To stop a currently running Heliactyl instance, use `pm2 stop heliactyl`
 >
 > # Warning
 >
+=======
+> [!NOTE] 
+> # What happened to 13.x and 15.x?
+> Due to major issues with both versions, we've decided to return to V12 and continue.
+> The latest versions will be on v12 now.
+
+> [!WARNING] 
+> # Warning
+>>>>>>> 25aabc28b99cd709aa732265fbd6ddfb4d0004af
 > We cannot force you to keep "Powered by Heliactyl" in the footer, but please consider keeping it. It helps to get more visibility for the project, which is getting better. We won't > provide technical support for installations without the notice in the footer. We may DMCA the website under certain conditions.
 > Please do keep the footer, though.
 
 > [!CAUTION]
+<<<<<<< HEAD
 >
 > # Legacy Deprecation Notice
 >
+=======
+> # Legacy Deprecation Notice
+>>>>>>> 25aabc28b99cd709aa732265fbd6ddfb4d0004af
 > Heliactyl v6, v7, v8, v9, v10, v11, v13, v15 is now deprecated as listed in our Discord and should not be used.
 > Please update to Heliactyl v12 or use Heliactyl v14.
