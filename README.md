@@ -173,8 +173,6 @@ To stop a currently running Heliactyl instance, use `pm2 stop heliactyl`
 >
 > # Warning
 >
-> [!NOTE]
->
 > # What happened to 13.x and 15.x?
 >
 > Due to major issues with both versions, we've decided to return to V12 and continue.
