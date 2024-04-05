@@ -49,11 +49,20 @@
                       <p><i class="mdi mdi-layers"></i> &nbsp; Ram: <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory/1024 %> GB(s)</p>
                       <p><i class="mdi mdi-harddisk"></i> &nbsp; Disk: <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk/1024 %> GB(s)</p>
                       <br>
-                      <a role="button" style="border-radius: 15px;" class="btn btn-danger btn-lg" onclick="if (confirm('Please confirm you want to delete this server, the data cannot be retrieved after it has been deleted.')) { window.location.href='/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }">Delete Server</a>
-                      <a role="button" class="btn btn-primary btn-lg" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Edit Resources</a>
-                    <% if (settings.renewals.status) { %> 
-                      <a role="button" style="border-radius: 15px;" class="btn btn-warning btn-lg" href="/renew?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">Renew</a>
-                    <% } %>
+
+                      <a role="button" style="border-radius: 15px; display: inline-flex; align-items: center;" class="btn btn-danger btn-lg" onclick="if (confirm('Please confirm you want to delete this server, the data cannot be retrieved after it has been deleted.')) { window.location.href='/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>' }">
+                        <i class="mdi mdi-delete mr-2 d-flex justify-content-center"></i>
+                        <span>Delete Server</span> 
+                      </a>             
+
+                      <a role="button" style="border-radius: 15px; display: inline-flex; align-items: center;" class="btn btn-warning btn-lg" href="/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">
+                      <i class="mdi mdi-pencil mr-2 d-flex justify-content-center"></i> Edit Resources</a>
+
+                      <% if (settings.renewals.status) { %> 
+                        <a role="button" style="border-radius: 15px; display: inline-flex; align-items: center;" class="btn btn-success btn-lg" href="/renew?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>">
+                        <i class="mdi mdi-refresh mr-2 d-flex justify-content-center"></i> Renew</a>
+                      <% } %>
+                      
                       </form>
                     </div>
                   </div>
@@ -64,7 +73,7 @@
             <div class="card">
               <div class="card-body">
                 <center>
-                  <a class="button2" href="../servers/new" onclick="this.classList.toggle('button2--loading')">
+                  <a class="button2 d-flex justify-content-center" href="../servers/new" onclick="this.classList.toggle('button2--loading')">
                     <span class="button2__text">+</span>
                   </a>
                 </center>

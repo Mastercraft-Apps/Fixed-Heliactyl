@@ -48,6 +48,7 @@
         "admin/resources": "admin-resources.ejs",
         "admin/coupons": "admin-coupons.ejs",
         "admin/coins": "admin-coins.ejs",
+        "admin/test": "info.ejs",
         "redeem": "redeem.ejs",
         "settings": "settings.ejs",
         "j4r": "j4r.ejs",
@@ -74,7 +75,8 @@
         "/admin/plans",
         "/admin/resources",
         "/admin/coupons",
-        "/admin/coins"
+        "/admin/coins",
+        "/admin/test"
     ],
     "variables": {
         "home": {

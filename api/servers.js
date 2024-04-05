@@ -1,17 +1,17 @@
 const settings = require("../settings.json");
 const indexjs = require("../index.js");
-const adminjs = require('./admin.js');
-const getPteroUser = require('../misc/getPteroUser.js')
-const Queue = require('../misc/Queue.js')
-const log = require('../misc/log.js')
+const adminjs = require("./admin.js");
+const getPteroUser = require("../misc/getPteroUser.js");
+const Queue = require("../misc/Queue.js");
+const log = require("../misc/log.js");
 
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 const fs = require("fs");
 
 
-if (settings.pterodactyl) if (settings.pterodactyl.domain) {
-  if (settings.pterodactyl.domain.slice(-1) == "/") settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
-};
+if (settings.pterodactyl && settings.pterodactyl.domain && settings.pterodactyl.domain.endsWith("/")) {
+  settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
+}
 
 module.exports.load = async function (app, db) {
   const queue = new Queue()
@@ -97,54 +97,63 @@ module.exports.load = async function (app, db) {
           let egg = req.query.egg;
 
           let egginfo = newsettings.api.client.eggs[egg];
-          if (!newsettings.api.client.eggs[egg]) {
-            cb()
+          if (!egginfo) {
+            cb();
             return res.redirect(`${redirectlink}?err=INVALIDEGG`);
           }
+
           let ram = parseFloat(req.query.ram);
           let disk = parseFloat(req.query.disk);
           let cpu = parseFloat(req.query.cpu);
+
           if (!isNaN(ram) && !isNaN(disk) && !isNaN(cpu)) {
             if (ram2 + ram > package.ram + extra.ram) {
-              cb()
+              cb();
               return res.redirect(`${redirectlink}?err=EXCEEDRAM&num=${package.ram + extra.ram - ram2}`);
             }
+
             if (disk2 + disk > package.disk + extra.disk) {
-              cb()
+              cb();
               return res.redirect(`${redirectlink}?err=EXCEEDDISK&num=${package.disk + extra.disk - disk2}`);
             }
+
             if (cpu2 + cpu > package.cpu + extra.cpu) {
-              cb()
+              cb();
               return res.redirect(`${redirectlink}?err=EXCEEDCPU&num=${package.cpu + extra.cpu - cpu2}`);
             }
-            if (egginfo.minimum.ram) if (ram < egginfo.minimum.ram) {
-              cb()
+
+            if (egginfo.minimum && egginfo.minimum.ram && ram < egginfo.minimum.ram) {
+              cb();
               return res.redirect(`${redirectlink}?err=TOOLITTLERAM&num=${egginfo.minimum.ram}`);
             }
-            if (egginfo.minimum.disk) if (disk < egginfo.minimum.disk) {
-              cb()
+
+            if (egginfo.minimum && egginfo.minimum.disk && disk < egginfo.minimum.disk) {
+              cb();
               return res.redirect(`${redirectlink}?err=TOOLITTLEDISK&num=${egginfo.minimum.disk}`);
             }
-            if (egginfo.minimum.cpu) if (cpu < egginfo.minimum.cpu) {
-              cb()
+
+            if (egginfo.minimum && egginfo.minimum.cpu && cpu < egginfo.minimum.cpu) {
+              cb();
               return res.redirect(`${redirectlink}?err=TOOLITTLECPU&num=${egginfo.minimum.cpu}`);
             }
-            if (egginfo.maximum) {
-              if (egginfo.maximum.ram) if (ram > egginfo.maximum.ram) {
-                cb()
-                return res.redirect(`${redirectlink}?err=TOOMUCHRAM&num=${egginfo.maximum.ram}`);
-              }
-              if (egginfo.maximum.disk) if (disk > egginfo.maximum.disk) {
-                cb()
-                return res.redirect(`${redirectlink}?err=TOOMUCHDISK&num=${egginfo.maximum.disk}`);
-              }
-              if (egginfo.maximum.cpu) if (cpu > egginfo.maximum.cpu) {
-                cb()
-                return res.redirect(`${redirectlink}?err=TOOMUCHCPU&num=${egginfo.maximum.cpu}`)
-              }
+
+            if (egginfo.maximum && egginfo.maximum.ram && ram > egginfo.maximum.ram) {
+              cb();
+              return res.redirect(`${redirectlink}?err=TOOMUCHRAM&num=${egginfo.maximum.ram}`);
+            }
+
+            if (egginfo.maximum && egginfo.maximum.disk && disk > egginfo.maximum.disk) {
+              cb();
+              return res.redirect(`${redirectlink}?err=TOOMUCHDISK&num=${egginfo.maximum.disk}`);
+            }
+
+            if (egginfo.maximum && egginfo.maximum.cpu && cpu > egginfo.maximum.cpu) {
+              cb();
+              return res.redirect(`${redirectlink}?err=TOOMUCHCPU&num=${egginfo.maximum.cpu}`);
             }
 
             let specs = egginfo.info;
+            
             specs["user"] = (await db.get("users-" + req.session.userinfo.id));
             if (!specs["limits"]) specs["limits"] = {
               swap: 0,
@@ -177,10 +186,13 @@ module.exports.load = async function (app, db) {
               settings.pterodactyl.domain + "/api/application/servers",
               {
                 method: "post",
-                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}`, "Accept": "application/json" },
+                headers: { 
+                  'Content-Type': 'application/json',
+                  "Authorization": `Bearer ${settings.pterodactyl.key}`,
+                  "Accept": "application/json" 
+                },
                 body: JSON.stringify(await specs)
-              }
-            );
+              });
             await serverinfo
             if (serverinfo.statusText !== "Created") {
               console.log(await serverinfo.text());
@@ -201,7 +213,7 @@ module.exports.load = async function (app, db) {
             await db.set(`createdserver-${req.session.userinfo.id}`, true)
 
             cb()
-            log('created server', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} created a new server named \`${name}\` with the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\`\`\``)
+            log('created server', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} created a new server named \`${name}\` with the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\nLocation ID: ${location}\nEgg: ${egg}\`\`\``)
             return res.redirect("/servers?err=CREATEDSERVER");
           } else {
             cb()
@@ -314,32 +326,34 @@ module.exports.load = async function (app, db) {
           }
         );
         if (await serverinfo.statusText !== "OK") return res.redirect(`${redirectlink}?id=${req.query.id}&err=ERRORONMODIFY`);
+        
         let text = JSON.parse(await serverinfo.text());
         log(`modify server`, `${req.session.userinfo.username}#${req.session.userinfo.discriminator} modified the server called \`${text.attributes.name}\` to have the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\`\`\``)
         pterorelationshipsserverdata.push(text);
         req.session.pterodactyl.relationships.servers.data = pterorelationshipsserverdata;
-        let theme = indexjs.get(req);
         adminjs.suspend(req.session.userinfo.id);
+
         res.redirect("/servers?err=MODIFYSERVER");
       } else {
         res.redirect(`${redirectlink}?id=${req.query.id}&err=MISSINGVARIABLE`);
       }
     } else {
+      let theme = indexjs.get(req);
       res.redirect(theme.settings.redirect.modifyserverdisabled ? theme.settings.redirect.modifyserverdisabled : "/");
     }
   });
 
   app.get("/delete", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
-
+  
     if (!req.query.id) return res.send("Missing id.");
-
+  
     let theme = indexjs.get(req);
-
+  
     let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
     if (newsettings.api.client.allow.server.delete == true) {
       if (req.session.pterodactyl.relationships.servers.data.filter(server => server.attributes.id == req.query.id).length == 0) return res.send("Could not find server with that ID.");
-
+  
       let deletionresults = await fetch(
         settings.pterodactyl.domain + "/api/application/servers/" + req.query.id,
         {
@@ -351,28 +365,32 @@ module.exports.load = async function (app, db) {
         }
       );
       let ok = await deletionresults.ok;
-      if (ok !== true) return res.send("An error has occur while attempting to delete the server.");
+      if (ok !== true) return res.send("An error has occurred while attempting to delete the server.");
       let pterodactylinfo = req.session.pterodactyl;
-
+  
       pterodactylinfo.relationships.servers.data = pterodactylinfo.relationships.servers.data.filter(server => server.attributes.id.toString() !== req.query.id);
       req.session.pterodactyl = pterodactylinfo;
-
-      await db.delete(`lastrenewal-${req.query.id}`)
-
+  
+      await db.delete(`lastrenewal-${req.query.id}`);
+  
       adminjs.suspend(req.session.userinfo.id);
-      const deletedServer = pterodactylinfo.relationships.servers.data.find(server => server.attributes.id.toString() === req.query.id);
-      if (deletedServer && deletedServer.attributes) {
-        log('deleted server', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} deleted server ${deletedServer.attributes.name}.`);
-      } else {
-        log('deleted server', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} deleted server with unknown name.`);
-      };
+      let serverName = "Unknown";
+      const deletedServerIndex = pterodactylinfo.relationships.servers.data.findIndex(server => server.attributes.id.toString() === req.query.id);
+      if (deletedServerIndex !== -1) {
+        serverName = pterodactylinfo.relationships.servers.data[deletedServerIndex].attributes.name;
+        // Remove the deleted server from the array
+        pterodactylinfo.relationships.servers.data.splice(deletedServerIndex, 1);
+        req.session.pterodactyl = pterodactylinfo;
+      }
+      log('deleted server', `${req.session.userinfo.username}#${req.session.userinfo.discriminator} deleted server ${serverName}.`);
       
       return res.redirect('/servers?err=DELETEDSERVER');
     } else {
       res.redirect(theme.settings.redirect.deleteserverdisabled ? theme.settings.redirect.deleteserverdisabled : "/");
     }
   });
-
+  
+  
   app.get(`/api/createdServer`, async (req, res) => {
     if (!req.session.pterodactyl) return res.json({ error: true, message: `You must be logged in.` });
 

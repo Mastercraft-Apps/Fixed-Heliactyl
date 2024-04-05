@@ -1,15 +1,19 @@
 const settings = require("../settings.json");
-const { CronJob } = require('cron')
-const getAllServers = require('../misc/getAllServers')
-const fetch = require('node-fetch')
+const { CronJob } = require("cron");
+const getAllServers = require("../misc/getAllServers");
+const fetch = require("node-fetch");
 const chalk = require("chalk");
+
+if (settings.pterodactyl && settings.pterodactyl.domain && settings.pterodactyl.domain.endsWith("/")) {
+    settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
+}
 
 module.exports.load = async function (app, db) {
     // Renewal system is ...
     app.get(`/api/renewalstatus`, async (req, res) => {
         if (!settings.renewals.status) return res.json({ error: true })
         if (!req.query.id) return res.json({ error: true })
-        if (!req.session.pterodactyl) res.json({ error: true })
+        if (!req.session.pterodactyl) return res.json({ error: true })
         if (req.session.pterodactyl.relationships.servers.data.filter(server => server.attributes.id == req.query.id).length == 0) return res.json({ error: true });
 
         const lastRenew = await db.get(`lastrenewal-${req.query.id}`)
@@ -77,7 +81,9 @@ module.exports.load = async function (app, db) {
                         await db.delete(`lastrenewal-${id}`)
                     }
                 }
-            })
+            }).catch(error => {
+                console.error('Error during renewal server check:', error);
+            });
             console.log(chalk.cyan("[Heliactyl]") + chalk.white("The renewal check-over is now complete."));
         }
     }, null, true, settings.timezone)
@@ -93,7 +99,7 @@ function msToDaysAndHours(ms) {
     const hours = Math.round((ms - (days * msInDay)) / msInHour * 100) / 100
 
     let pluralDays = days === 1 ? '' : 's';
-    let pluralHours = hours === 1 ? '' : 's';    
+    let pluralHours = hours === 1 ? '' : 's';
 
     return `${days} day${pluralDays} and ${hours} hour${pluralHours}`
 }

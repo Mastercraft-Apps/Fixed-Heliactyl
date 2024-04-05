@@ -1,4 +1,4 @@
-const settings = require('../settings.json')
+const settings = require('../settings.json');
 
 const fetch = require('node-fetch')
 
@@ -26,8 +26,15 @@ module.exports = (action, message) => {
                         name: 'Logging'
                     },
                     thumbnail: {
-                        url: '<%= settings.icon %>'
-                    }
+                        _comment: "Replace the url for the webhook image",
+                        url: 'https://cdn.discordapp.com/attachments/881207010417315861/949595064554913812/Copy_of_H_35.png?ex=661a4c52&is=6607d752&hm=8a9503adcddb8537ce1875cef66fd3e8364e466cfa5fbeabe363b6db08722138&'
+                    },
+                    footer: {
+                        text: 'Powered by fixed-heliactyl',
+                        _comment: "Replace the url for the webhook image footer",
+                        icon_url: 'https://avatars.githubusercontent.com/u/122883790?s=48&v=4'
+                    },
+                    timestamp: new Date()
                 }
             ]
         })

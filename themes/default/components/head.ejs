@@ -35,8 +35,9 @@
 <style>
 .button {
   position: relative;
-  padding: 16px 48px;
+  padding: 16px 50px;
   background: #0090e7;
+  top: 6px;
   border: none;
   outline: none;
   border-radius: 15px;
@@ -143,4 +144,15 @@
     transform: rotate(1turn);
   }
 }
+
+@media screen and (max-width: 768px) {
+    .button2 {
+      width: 60%; 
+      max-width: none; 
+    }
+
+    .button2__text {
+      font-size: 75px; 
+    }
+  }
 </style>

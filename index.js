@@ -1,5 +1,5 @@
 //
-//  * Heliactyl-Fixed
+//  * Fixed-Heliactyl
 // 
 //  * Heliactyl 12.7, Codename Gekyume
 //  * Copyright SrydenCloud Limited & Pine Platforms Ltd
@@ -9,7 +9,7 @@
 // Load packages.
 
 const fs = require("fs");
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 const chalk = require("chalk");
 const axios = require("axios");
 
@@ -29,6 +29,10 @@ if (typeof atob === 'undefined') {
 // Load settings.
 
 const settings = require("./settings.json");
+
+if (settings.pterodactyl && settings.pterodactyl.domain && settings.pterodactyl.domain.endsWith("/")) {
+  settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
+}
 
 const themesettings = {
   index: "index.ejs",
@@ -78,8 +82,10 @@ module.exports.db = db;
 
 // Load express addons.
 
+const cookieParser = require("cookie-parser");
 const express = require("express");
 const app = express();
+
 require('express-ws')(app);
 
 const ejs = require("ejs");
@@ -105,6 +111,8 @@ app.use(express.json({
   verify: undefined
 }));
 
+app.use(cookieParser());
+
 // Load the console
 
 const listener = app.listen(settings.website.port, async function() {
@@ -116,7 +124,7 @@ const listener = app.listen(settings.website.port, async function() {
 
   try {
     let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));;
-    const response = await axios.get(`https://api.github.com/repos/OvernodeProjets/Heliactyl-fixed/releases/latest`);
+    const response = await axios.get(`https://api.github.com/repos/OvernodeProjets/Fixed-Heliactyl/releases/latest`);
     const latestVersion = response.data.tag_name;
 
     if (latestVersion !== newsettings.version) {
@@ -133,6 +141,7 @@ const listener = app.listen(settings.website.port, async function() {
 });
 
 var cache = false;
+
 app.use(function(req, res, next) {
   let manager = (JSON.parse(fs.readFileSync("./settings.json").toString())).api.client.ratelimits;
   if (manager[req._parsedUrl.pathname]) {
@@ -169,13 +178,15 @@ apifiles.forEach(file => {
  // Load route
 
 app.all("*", async (req, res) => {
-  if (req.session.pterodactyl && req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) {
+  if (req.session.pterodactyl) if ( req.session.pterodactyl.id !== await db.get("users-" + req.session.userinfo.id)) {
     return res.redirect("/login?prompt=none");
   }
 
   let theme = indexjs.get(req);
   
-  if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname)) if (!req.session.userinfo || !req.session.pterodactyl) return res.redirect("/login" + (req._parsedUrl.pathname.slice(0, 1) == "/" ? "?redirect=" + req._parsedUrl.pathname.slice(1) : ""));
+  if (theme.settings.mustbeloggedin.includes(req._parsedUrl.pathname)) if (!req.session.userinfo || !req.session.pterodactyl) 
+  return res.redirect("/login" + (req._parsedUrl.pathname.slice(0, 1) == "/" ? "?redirect=" + req._parsedUrl.pathname.slice(1) : ""));
+
   if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
     ejs.renderFile(
       `./themes/${theme.name}/${theme.settings.notfound}`, 
@@ -188,7 +199,7 @@ app.all("*", async (req, res) => {
         if (err) {
           console.log(chalk.red(`[Heliactyl] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
-          return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+          return res.render("404.ejs", { err });
         };
         res.status(200);
         return res.send(str);
@@ -201,14 +212,16 @@ app.all("*", async (req, res) => {
           headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
         }
       );
+
       if (await cacheaccount.statusText == "Not Found") {
         if (err) {
           console.log(chalk.red(`[Heliactyl] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
-          return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+          return res.render("404.ejs", { err });
         };
         return res.send(str);
       };
+      
       let cacheaccountinfo = JSON.parse(await cacheaccount.text());
     
       req.session.pterodactyl = cacheaccountinfo.attributes;
@@ -216,7 +229,7 @@ app.all("*", async (req, res) => {
         if (err) {
           console.log(chalk.red(`[Heliactyl] An error has occured on path ${req._parsedUrl.pathname}:`));
           console.log(err);
-          return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+          return res.render("404.ejs", { err });
         };
         return res.send(str);
       };
@@ -231,7 +244,7 @@ app.all("*", async (req, res) => {
         if (err) {
           console.log(`[Heliactyl] An error has occured on path ${req._parsedUrl.pathname}:`);
           console.log(err);
-          return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+          return res.render("404.ejs", { err });
         };
         res.status(200);
         res.send(str);
@@ -239,7 +252,9 @@ app.all("*", async (req, res) => {
     });
     return;
   };
-    const data = await eval(indexjs.renderdataeval)
+
+  const data = await eval(indexjs.renderdataeval)
+  
   ejs.renderFile(
     `./themes/${theme.name}/${theme.settings.pages[req._parsedUrl.pathname.slice(1)] ? theme.settings.pages[req._parsedUrl.pathname.slice(1)] : theme.settings.notfound}`, 
     data,
@@ -250,7 +265,7 @@ app.all("*", async (req, res) => {
     if (err) {
       console.log(chalk.red(`[Heliactyl] An error has occured on path ${req._parsedUrl.pathname}:`));
       console.log(err);
-      return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+      return res.render("404.ejs", { err });
     };
     res.status(200);
     res.send(str);
@@ -259,7 +274,7 @@ app.all("*", async (req, res) => {
 
 module.exports.get = function(req) {
   let theme = JSON.parse(fs.readFileSync("./settings.json")).theme;
-  let tname = encodeURIComponent(getCookie(req, "theme"));
+  let tname = encodeURIComponent(req.cookies.theme);
   let name = (
     tname ?
       fs.existsSync(`./themes/${tname}`) ?
@@ -282,32 +297,15 @@ module.exports.islimited = async function() {
 }
 
 module.exports.ratelimits = async function(length) {
-  if (cache == true) return setTimeout(
-    indexjs.ratelimits
-    , 1
+  if (cache == true) 
+  return setTimeout(
+    indexjs.ratelimits, 1
   );
+  
   cache = true;
   setTimeout(
     async function() {
       cache = false;
     }, length * 1000
   )
-}
-
-// Get a cookie.
-function getCookie(req, cname) {
-  let cookies = req.headers.cookie;
-  if (!cookies) return null;
-  let name = cname + "=";
-  let ca = cookies.split(';');
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return decodeURIComponent(c.substring(name.length, c.length));
-    }
-  }
-  return "";
 }

@@ -8,8 +8,9 @@ if (settings.api.client.oauth2.link.slice(-1) == "/")
 if (settings.api.client.oauth2.callbackpath.slice(0, 1) !== "/")
   settings.api.client.oauth2.callbackpath = "/" + settings.api.client.oauth2.callbackpath;
 
-if (settings.pterodactyl.domain.slice(-1) == "/")
-  settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
+if (settings.pterodactyl && settings.pterodactyl.domain && settings.pterodactyl.domain.endsWith("/")) {
+    settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
+}
 
 const indexjs = require("../index.js");
 const log = require('../misc/log')
@@ -39,9 +40,9 @@ module.exports.load = async function (app, db) {
     res.send(`
     <head>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/nanobar/0.4.2/nanobar.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap" rel="stylesheet">
     <title>Please wait...</title>
     </head>
     <body style="background-color: #111319; font-family: 'IBM Plex Sans', sans-serif;">
@@ -85,6 +86,7 @@ nanobar.go(100);
 
     let ip = (newsettings.api.client.oauth2.ip["trust x-forwarded-for"] == true ? (req.headers['x-forwarded-for'] || req.connection.remoteAddress) : req.connection.remoteAddress);
     ip = (ip ? ip : "::1").replace(/::1/g, "::ffff:127.0.0.1").replace(/^.*:/, '');
+    
     if (newsettings.antivpn.status && ip !== '127.0.0.1' && !newsettings.antivpn.whitelistedIPs.includes(ip)) {
       const vpn = await vpnCheck(newsettings.antivpn.APIKey, db, ip, res)
       if (vpn) return

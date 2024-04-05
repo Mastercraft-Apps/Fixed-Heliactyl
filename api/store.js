@@ -1,12 +1,13 @@
 const indexjs = require("../index.js");
 const adminjs = require("./admin.js");
-const settings = require("../settings.json");
 const fs = require("fs");
 const ejs = require("ejs");
 const log = require('../misc/log');
 
 module.exports.load = async function(app, db) {
   const buyResource = async (req, res, resourceType, resourceName) => {
+    if (!req.session.pterodactyl) return res.redirect("/login");
+
     let newsettings = await enabledCheck(req, res);
     if (!newsettings) return;
 
@@ -69,7 +70,7 @@ module.exports.load = async function(app, db) {
         if (err) {
           console.log(`[WEBSITE] An error has occurred on path ${req._parsedUrl.pathname}:`);
           console.log(err);
-          return res.send("An error has occurred while attempting to load this page. Please contact an administrator to fix this.");
+          return res.render("404.ejs", { err });
         }
         res.status(200);
         res.send(str);

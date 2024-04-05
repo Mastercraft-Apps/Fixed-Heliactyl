@@ -108,7 +108,7 @@
                           <% } %>
                         </select>
                        </div>
-                        <a role="button" id="create-btn" class="button"  href="javascript: submitNew()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Deploy
+                        <a role="button" id="create-btn" class="button mr-2 justify-content-center"  href="javascript: submitNew()" onclick="this.classList.toggle('button--loading')"><span class="button__text">Deploy
                         <% if (settings.servercreation.cost > 1) { %>
                         - <%= settings.servercreation.cost %>
                        <% } %>
@@ -137,6 +137,8 @@
       async function submitNew() {
         let name = encodeURIComponent(document.getElementById("InputName").value);
         let egg = encodeURIComponent(document.getElementById("InputEgg").value);
+        let location = encodeURIComponent(document.getElementById("InputLoc").value);
+        
         <% if (settings.resources.typeRessources == "GB") { %>
           let ram = encodeURIComponent(document.getElementById("InputRAM").value * 1024);
           let disk = encodeURIComponent(document.getElementById("InputDisk").value * 1024);
@@ -144,12 +146,14 @@
           let ram = encodeURIComponent(document.getElementById("InputRAM").value);
           let disk = encodeURIComponent(document.getElementById("InputDisk").value);
         <% } %>
+        
         <% if (settings.resources.typeCPU == "Core") { %>
         let cpu = encodeURIComponent(document.getElementById("InputCPU").value * 100);
         <% } else { %>
         let cpu = encodeURIComponent(document.getElementById("InputCPU").value);
         <% } %>
-        let location = encodeURIComponent(document.getElementById("InputLoc").value);
+
+
         document.location.href = `/create?name=${name}&egg=${egg}&ram=${ram}&disk=${disk}&cpu=${cpu}&location=${location}`;
       };
     </script>

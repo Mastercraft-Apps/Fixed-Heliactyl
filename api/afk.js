@@ -1,13 +1,12 @@
-// Orignal code by betterheliactyl
-// Modified by achul123
-
 const fs = require('fs');
 
 let currentlyonpage = {};
 
 module.exports.load = async function(app, db) {
 
-  app.ws("/afk/ws", async (ws, req) => {
+  app.ws("/afk/ws", async (ws, req, res) => {
+
+    if (!req.session.pterodactyl) return res.redirect("/login");
 
     let newsettings = JSON.parse(fs.readFileSync("./settings.json"));
 
@@ -28,13 +27,16 @@ module.exports.load = async function(app, db) {
         usercoins = usercoins + newsettings.api["afk page"].coins;
         if (usercoins > 999999999999999) return ws.close();
         await db.set("coins-" + req.session.userinfo.id, usercoins);  
-        ws.send(JSON.stringify({"type":"coin"}))
+
+        if (ws.readyState === ws.OPEN) {
+          ws.send(JSON.stringify({"type":"coin"}));
+        }
       }, newsettings.api["afk page"].every * 1000
     );
 
-    ws.onclose = async() => {
+    ws.on('close', async () => {
       clearInterval(coinloop);
       delete currentlyonpage[req.session.userinfo.id];
-    }
+    }); 
   });
 };

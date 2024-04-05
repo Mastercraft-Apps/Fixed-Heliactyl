@@ -1,9 +1,9 @@
 {
   "name": "heliactyl",
-  "version": "12.7.8",
+  "version": "12.7.9",
   "description": "The best Pterodactyl client area.",
   "main": "index.js",
-  "author": "Heliactyl-Fixed",
+  "author": "Fixed-Heliactyl",
   "dependencies": {
     "@keyv/mongo": "^1.2.1",
     "@keyv/mysql": "^1.1.5",
@@ -12,6 +12,7 @@
     "@keyv/sqlite": "^3.5.2",
     "axios": "^1.6.0",
     "chalk": "^4.1.0",
+    "cookie-parser": "^1.4.6",
     "cron": "^1.8.2",
     "discord.js": "^12.5.3",
     "ejs": "^3.1.9",

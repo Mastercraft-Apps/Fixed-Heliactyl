@@ -1,16 +1,18 @@
 const ejs = require("ejs");
 const fs = require("fs");
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 const settings = require("../settings.json");
 const indexjs = require("../index.js");
-const adminjs = require('./admin.js');
-const log = require('../misc/log.js')
+const adminjs = require("./admin.js");
+const log = require("../misc/log.js");
 
-if (settings.pterodactyl) if (settings.pterodactyl.domain) {
-    if (settings.pterodactyl.domain.slice(-1) == "/") settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
-};
+module.exports.load = async function (app, db) {
 
-module.exports.load = async function(app, db) {
+  /**
+   * GET /setcoins
+   * Endpoint to set the number of coins for a user.
+   */
+
     app.get("/setcoins", async (req, res) => {
         let theme = indexjs.get(req);
 
@@ -19,11 +21,12 @@ module.exports.load = async function(app, db) {
         let cacheaccount = await fetch(
             settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
             {
-            method: "get",
-            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
             }
         );
         if (await cacheaccount.statusText == "Not Found") return four0four(req, res, theme);
+        
         let cacheaccountinfo = JSON.parse(await cacheaccount.text());
 
         req.session.pterodactyl = cacheaccountinfo.attributes;
@@ -36,7 +39,7 @@ module.exports.load = async function(app, db) {
 
         if (!id) return res.redirect(failredirect + "?err=MISSINGID");
         if (!(await db.get("users-" + req.query.id))) return res.redirect(`${failredirect}?err=INVALIDID`);
-        
+
         if (!coins) return res.redirect(failredirect + "?err=MISSINGCOINS");
 
         coins = parseFloat(coins);
@@ -56,6 +59,11 @@ module.exports.load = async function(app, db) {
         res.redirect(successredirect + "?err=none");
     });
 
+  /**
+   * GET /addcoins
+   * Endpoint to add coins to a user's account.
+   */
+
     app.get("/addcoins", async (req, res) => {
         let theme = indexjs.get(req);
 
@@ -64,8 +72,8 @@ module.exports.load = async function(app, db) {
         let cacheaccount = await fetch(
             settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
             {
-            method: "get",
-            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
             }
         );
         if (await cacheaccount.statusText == "Not Found") return four0four(req, res, theme);
@@ -81,7 +89,7 @@ module.exports.load = async function(app, db) {
 
         if (!id) return res.redirect(failredirect + "?err=MISSINGID");
         if (!(await db.get("users-" + req.query.id))) return res.redirect(`${failredirect}?err=INVALIDID`);
-        
+
         if (!coins) return res.redirect(failredirect + "?err=MISSINGCOINS");
 
         let currentcoins = await db.get("coins-" + id) || 0;
@@ -103,32 +111,37 @@ module.exports.load = async function(app, db) {
         res.redirect(successredirect + "?err=none");
     });
 
+  /**
+   * GET /setresources
+   * Endpoint to set additional resources for a user's account.
+   */
+
     app.get("/setresources", async (req, res) => {
         let theme = indexjs.get(req);
-    
+
         if (!req.session.pterodactyl) return four0four(req, res, theme);
-        
+
         let cacheaccount = await fetch(
             settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
             {
-              method: "get",
-              headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
             }
         );
         if (await cacheaccount.statusText == "Not Found") return four0four(req, res, theme);
         let cacheaccountinfo = JSON.parse(await cacheaccount.text());
-    
+
         req.session.pterodactyl = cacheaccountinfo.attributes;
         if (cacheaccountinfo.attributes.root_admin !== true) return four0four(req, res, theme);
-    
+
         let failredirect = theme.settings.redirect.failedsetresources || "/";
-    
+
         if (!req.query.id) return res.redirect(`${failredirect}?err=MISSINGID`);
-    
+
         if (!(await db.get("users-" + req.query.id))) return res.redirect(`${failredirect}?err=INVALIDID`);
-    
+
         let successredirect = theme.settings.redirect.setresources || "/";
-    
+
         if (req.query.ram || req.query.disk || req.query.cpu || req.query.servers) {
             let ramstring = req.query.ram;
             let diskstring = req.query.disk;
@@ -157,7 +170,7 @@ module.exports.load = async function(app, db) {
                 }
                 extra.ram = ram;
             }
-            
+
             if (diskstring) {
                 let disk = parseFloat(diskstring);
                 if (disk < 0 || disk > 999999999999999) {
@@ -165,7 +178,7 @@ module.exports.load = async function(app, db) {
                 }
                 extra.disk = disk;
             }
-            
+
             if (cpustring) {
                 let cpu = parseFloat(cpustring);
                 if (cpu < 0 || cpu > 999999999999999) {
@@ -181,7 +194,7 @@ module.exports.load = async function(app, db) {
                 }
                 extra.servers = servers;
             }
-            
+
             if (extra.ram == 0 && extra.disk == 0 && extra.cpu == 0 && extra.servers == 0) {
                 await db.delete("extra-" + req.query.id);
             } else {
@@ -197,32 +210,65 @@ module.exports.load = async function(app, db) {
         }
     });
 
+  /**
+   * GET /stats
+   * Endpoint to 
+   * Test
+   */
+  
+  app.get("/stats", async (req, res) => {
+    const theme = indexjs.get(req);
+  
+    if (!req.session.pterodactyl || !req.session.pterodactyl.root_admin) {
+      return four0four(req, res, theme);
+    }
+  
+    try {
+      const users = await db.get("users") || [];
+  
+      const stats = {
+        total_users: users.length,
+      };
+  
+      res.json(stats);
+  
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+  
+  /**
+   * GET /addresources
+   * Endpoint to add additional resources to a user's account.
+   */
+
     app.get("/addresources", async (req, res) => {
         let theme = indexjs.get(req);
-    
+
         if (!req.session.pterodactyl) return four0four(req, res, theme);
-        
+
         let cacheaccount = await fetch(
             settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
             {
-              method: "get",
-              headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
             }
         );
         if (await cacheaccount.statusText == "Not Found") return four0four(req, res, theme);
         let cacheaccountinfo = JSON.parse(await cacheaccount.text());
-    
+
         req.session.pterodactyl = cacheaccountinfo.attributes;
         if (cacheaccountinfo.attributes.root_admin !== true) return four0four(req, res, theme);
-    
+
         let failredirect = theme.settings.redirect.failedsetresources ? theme.settings.redirect.failedsetresources : "/";
-    
+
         if (!req.query.id) return res.redirect(`${failredirect}?err=MISSINGID`);
-    
+
         if (!(await db.get("users-" + req.query.id))) return res.redirect(`${failredirect}?err=INVALIDID`);
-    
+
         let successredirect = theme.settings.redirect.setresources ? theme.settings.redirect.setresources : "/";
-    
+
         if (req.query.ram || req.query.disk || req.query.cpu || req.query.servers) {
             let ramstring = req.query.ram;
             let diskstring = req.query.disk;
@@ -251,7 +297,7 @@ module.exports.load = async function(app, db) {
                 }
                 extra.ram = extra.ram + ram;
             }
-            
+
             if (diskstring) {
                 let disk = parseFloat(diskstring);
                 if (disk < 0 || disk > 999999999999999) {
@@ -259,7 +305,7 @@ module.exports.load = async function(app, db) {
                 }
                 extra.disk = extra.disk + disk;
             }
-            
+
             if (cpustring) {
                 let cpu = parseFloat(cpustring);
                 if (cpu < 0 || cpu > 999999999999999) {
@@ -275,7 +321,7 @@ module.exports.load = async function(app, db) {
                 }
                 extra.servers = extra.servers + servers;
             }
-            
+
             if (extra.ram == 0 && extra.disk == 0 && extra.cpu == 0 && extra.servers == 0) {
                 await db.delete("extra-" + req.query.id);
             } else {
@@ -291,17 +337,21 @@ module.exports.load = async function(app, db) {
         }
     });
 
+  /**
+   * GET /setplan
+   * Endpoint to set the plan for a user.
+   */
 
     app.get("/setplan", async (req, res) => {
         let theme = indexjs.get(req);
 
         if (!req.session.pterodactyl) return four0four(req, res, theme);
-        
+
         let cacheaccount = await fetch(
             settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
             {
-            method: "get",
-            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
             }
         );
         if (await cacheaccount.statusText == "Not Found") return four0four(req, res, theme);
@@ -329,22 +379,27 @@ module.exports.load = async function(app, db) {
             if (!newsettings.api.client.packages.list[req.query.package]) return res.redirect(`${failredirect}?err=INVALIDPACKAGE`);
             await db.set("package-" + req.query.id, req.query.package);
             adminjs.suspend(req.query.id);
-            
+
             log(`set plan`, `${req.session.userinfo.username}#${req.session.userinfo.discriminator} set the plan of the user with the ID \`${req.query.id}\` to \`${req.query.package}\`.`)
             return res.redirect(successredirect + "?err=none");
         }
     });
 
+  /**
+   * GET /create_coupon
+   * Endpoint to create a coupon code.
+   */
+
     app.get("/create_coupon", async (req, res) => {
         let theme = indexjs.get(req);
 
         if (!req.session.pterodactyl) return four0four(req, res, theme);
-        
+
         let cacheaccount = await fetch(
             settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
             {
-            method: "get",
-            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
             }
         );
         if (await cacheaccount.statusText == "Not Found") return four0four(req, res, theme);
@@ -387,16 +442,21 @@ module.exports.load = async function(app, db) {
         res.redirect(theme.settings.redirect.couponcreationsuccess + "?code=" + code)
     });
 
+  /**
+   * GET /revoke_coupon
+   * Endpoint to revoke a coupon code.
+   */
+
     app.get("/revoke_coupon", async (req, res) => {
         let theme = indexjs.get(req);
 
         if (!req.session.pterodactyl) return four0four(req, res, theme);
-        
+
         let cacheaccount = await fetch(
             settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
             {
-            method: "get",
-            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
             }
         );
         if (await cacheaccount.statusText == "Not Found") return four0four(req, res, theme);
@@ -417,13 +477,16 @@ module.exports.load = async function(app, db) {
         res.redirect(theme.settings.redirect.couponrevokesuccess + "?revokedcode=true");
     });
 
-    // remove account never used
+  /**
+   * GET /remove_account
+   * Endpoint to remove an account.
+   */
 
     app.get("/remove_account", async (req, res) => {
         let theme = indexjs.get(req);
 
         if (!req.session.pterodactyl) return four0four(req, res, theme);
-        
+
         let cacheaccount = await fetch(
             settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
             {
@@ -449,16 +512,16 @@ module.exports.load = async function(app, db) {
         let selected_ip = await db.get("ip-" + discordid);
 
         if (selected_ip) {
-        let allips = await db.get("ips") || [];
-        allips = allips.filter(ip => ip !== selected_ip);
+            let allips = await db.get("ips") || [];
+            allips = allips.filter(ip => ip !== selected_ip);
 
-        if (allips.length == 0) {
-            await db.delete("ips");
-        } else {
-            await db.set("ips", allips);
-        }
+            if (allips.length == 0) {
+                await db.delete("ips");
+            } else {
+                await db.set("ips", allips);
+            }
 
-        await db.delete("ip-" + discordid);
+            await db.delete("ip-" + discordid);
         }
 
         // Remove user.
@@ -467,9 +530,9 @@ module.exports.load = async function(app, db) {
         userids = userids.filter(user => user !== pteroid);
 
         if (userids.length == 0) {
-        await db.delete("users");
+            await db.delete("users");
         } else {
-        await db.set("users", userids);
+            await db.set("users", userids);
         }
 
         await db.delete("users-" + discordid);
@@ -484,8 +547,11 @@ module.exports.load = async function(app, db) {
         res.redirect(theme.settings.redirect.removeaccountsuccess + "?success=REMOVEACCOUNT");
     });
 
-    // Never used (getip)
-    
+  /**
+   * GET /getip
+   * Endpoint to retrieve the IP address associated with a user's account.
+   */
+
     app.get("/getip", async (req, res) => {
         let theme = indexjs.get(req);
 
@@ -494,8 +560,8 @@ module.exports.load = async function(app, db) {
         let cacheaccount = await fetch(
             settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
             {
-            method: "get",
-            headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
             }
         );
         if (await cacheaccount.statusText == "Not Found") return four0four(req, res, theme);
@@ -516,11 +582,16 @@ module.exports.load = async function(app, db) {
         return res.redirect(successredirect + "?err=NONE&ip=" + ip)
     });
 
+  /**
+   * GET /userinfo
+   * Endpoint to retrieve user information.
+   */
+
     app.get("/userinfo", async (req, res) => {
         let theme = indexjs.get(req);
 
         if (!req.session.pterodactyl) return four0four(req, res, theme);
-        
+
         let cacheaccount = await fetch(
             settings.pterodactyl.domain + "/api/application/users/" + (await db.get("users-" + req.session.userinfo.id)) + "?include=servers",
             {
@@ -533,41 +604,41 @@ module.exports.load = async function(app, db) {
 
         req.session.pterodactyl = cacheaccountinfo.attributes;
         if (cacheaccountinfo.attributes.root_admin !== true) return four0four(req, res, theme);
-        
-        if (!req.query.id) return res.send({status: "missing id"});
 
-        if (!(await db.get("users-" + req.query.id))) return res.send({status: "invalid id"});
-    
+        if (!req.query.id) return res.send({ status: "missing id" });
+
+        if (!(await db.get("users-" + req.query.id))) return res.send({ status: "invalid id" });
+
         let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
-    
+
         if (newsettings.api.client.oauth2.link.slice(-1) == "/")
-          newsettings.api.client.oauth2.link = newsettings.api.client.oauth2.link.slice(0, -1);
-      
+            newsettings.api.client.oauth2.link = newsettings.api.client.oauth2.link.slice(0, -1);
+
         if (newsettings.api.client.oauth2.callbackpath.slice(0, 1) !== "/")
-          newsettings.api.client.oauth2.callbackpath = "/" + newsettings.api.client.oauth2.callbackpath;
-        
+            newsettings.api.client.oauth2.callbackpath = "/" + newsettings.api.client.oauth2.callbackpath;
+
         if (newsettings.pterodactyl.domain.slice(-1) == "/")
-          newsettings.pterodactyl.domain = newsettings.pterodactyl.domain.slice(0, -1);
-        
+            newsettings.pterodactyl.domain = newsettings.pterodactyl.domain.slice(0, -1);
+
         let packagename = await db.get("package-" + req.query.id);
         let package = newsettings.api.client.packages.list[packagename ? packagename : newsettings.api.client.packages.default];
         if (!package) package = {
-          ram: 0,
-          disk: 0,
-          cpu: 0,
-          servers: 0
+            ram: 0,
+            disk: 0,
+            cpu: 0,
+            servers: 0
         };
-    
+
         package["name"] = packagename;
-    
+
         let pterodactylid = await db.get("users-" + req.query.id);
         let userinforeq = await fetch(
-          newsettings.pterodactyl.domain + "/api/application/users/" + pterodactylid + "?include=servers",
+            newsettings.pterodactyl.domain + "/api/application/users/" + pterodactylid + "?include=servers",
             {
-              method: "get",
-              headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${newsettings.pterodactyl.key}` }
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${newsettings.pterodactyl.key}` }
             }
-          );
+        );
         if (await userinforeq.statusText == "Not Found") {
             console.log("[WEBSITE] An error has occured while attempting to get a user's information");
             console.log("- Discord ID: " + req.query.id);
@@ -575,46 +646,46 @@ module.exports.load = async function(app, db) {
             return res.send({ status: "could not find user on panel" });
         }
         let userinfo = await userinforeq.json();
-    
+
         res.send({
-          status: "success",
-          package: package,
-          extra: await db.get("extra-" + req.query.id) ? await db.get("extra-" + req.query.id) : {
-            ram: 0,
-            disk: 0,
-            cpu: 0,
-            servers: 0
-          },
-          userinfo: userinfo,
-          coins: newsettings.api.client.coins.enabled == true ? (await db.get("coins-" + req.query.id) ? await db.get("coins-" + req.query.id) : 0) : null
+            status: "success",
+            package: package,
+            extra: await db.get("extra-" + req.query.id) ? await db.get("extra-" + req.query.id) : {
+                ram: 0,
+                disk: 0,
+                cpu: 0,
+                servers: 0
+            },
+            userinfo: userinfo,
+            coins: newsettings.api.client.coins.enabled == true ? (await db.get("coins-" + req.query.id) ? await db.get("coins-" + req.query.id) : 0) : null
         });
     });
 
     async function four0four(req, res, theme) {
         ejs.renderFile(
-            `./themes/${theme.name}/${theme.settings.notfound}`, 
+            `./themes/${theme.name}/${theme.settings.notfound}`,
             await eval(indexjs.renderdataeval),
             null,
-        function (err, str) {
-            delete req.session.newaccount;
-            if (err) {
-                console.log(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`);
-                console.log(err);
-                return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
-            };
-            res.status(404);
-            res.send(str);
-        });
+            function (err, str) {
+                delete req.session.newaccount;
+                if (err) {
+                    console.log(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`);
+                    console.log(err);
+                    return res.render("404.ejs", { err });
+                };
+                res.status(404);
+                res.send(str);
+            });
     }
 
-    module.exports.suspend = async function(discordid) {
+    module.exports.suspend = async function (discordid) {
         let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
         if (newsettings.api.client.allow.overresourcessuspend !== true) return;
 
         let canpass = await indexjs.islimited();
         if (canpass == false) {
             setTimeout(
-                async function() {
+                async function () {
                     adminjs.suspend(discordid);
                 }, 1
             )
@@ -626,10 +697,10 @@ module.exports.load = async function(app, db) {
         let userinforeq = await fetch(
             settings.pterodactyl.domain + "/api/application/users/" + pterodactylid + "?include=servers",
             {
-              method: "get",
-              headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+                method: "get",
+                headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
             }
-          );
+        );
         if (await userinforeq.statusText == "Not Found") {
             console.log("[WEBSITE] An error has occured while attempting to check if a user's server should be suspended.");
             console.log("- Discord ID: " + discordid);
@@ -641,7 +712,7 @@ module.exports.load = async function(app, db) {
         let packagename = await db.get("package-" + discordid);
         let package = newsettings.api.client.packages.list[packagename || newsettings.api.client.packages.default];
 
-        let extra = 
+        let extra =
             await db.get("extra-" + discordid) ||
             {
                 ram: 0,
@@ -676,10 +747,10 @@ module.exports.load = async function(app, db) {
                 await fetch(
                     settings.pterodactyl.domain + "/api/application/servers/" + suspendid + "/suspend",
                     {
-                      method: "post",
-                      headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+                        method: "post",
+                        headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
                     }
-                  );
+                );
             }
         } else {
             if (settings.renewals.status == true) return;
@@ -688,10 +759,10 @@ module.exports.load = async function(app, db) {
                 await fetch(
                     settings.pterodactyl.domain + "/api/application/servers/" + suspendid + "/unsuspend",
                     {
-                      method: "post",
-                      headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
+                        method: "post",
+                        headers: { 'Content-Type': 'application/json', "Authorization": `Bearer ${settings.pterodactyl.key}` }
                     }
-                  );
+                );
             }
         };
     }

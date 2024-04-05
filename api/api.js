@@ -1,5 +1,6 @@
 const indexjs = require("../index.js");
 const adminjs = require('./admin.js');
+const settings = require("../settings.json");
 const fs = require("fs");
 const ejs = require("ejs");
 const fetch = require('node-fetch');
@@ -10,46 +11,60 @@ const myCache = new NodeCache({
 });
 
 module.exports.load = async function (app, db) {
+  /**
+  * Information 
+  * A lot of the API information is taken from Heliactyl v14.
+  */
+
+
+  /**
+   * GET /api
+   * Returns the status of the API.
+   */
   app.get("/api", async (req, res) => {
-    let settings = await check(req, res);
-    if (!settings) return;
-    res.send(
-      {
-        "status": true
-      }
-    );
+    /* Check that the API key is valid */
+    let auth = await check(req, res);
+    if (!auth) return;
+    res.send({ "status": true });
   });
 
+  /**
+   * GET /api/userinfo
+   * Returns the user information.
+   */
+
   app.get("/api/userinfo", async (req, res) => {
-    let settings = await check(req, res);
-    if (!settings) return;
-
+    /* Check that the API key is valid */
+    let auth = await check(req, res);
+    if (!auth) return;
+  
     if (!req.query.id) return res.send({ status: "missing id" });
-
+  
     if (!(await db.get("users-" + req.query.id))) return res.send({ status: "invalid id" });
-
+  
     let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
-
+  
     if (newsettings.api.client.oauth2.link.slice(-1) == "/")
       newsettings.api.client.oauth2.link = newsettings.api.client.oauth2.link.slice(0, -1);
-
+  
     if (newsettings.api.client.oauth2.callbackpath.slice(0, 1) !== "/")
-      newsettings.api.client.oauth2.callbackpath = "/" + newsettings.api.client.oauth2.callbackpath;
+    newsettings.api.client.oauth2.callbackpath = "/" + newsettings.api.client.oauth2.callbackpath;
 
-    if (newsettings.pterodactyl.domain.slice(-1) == "/")
+      if (newsettings.pterodactyl.domain.slice(-1) == "/")
       newsettings.pterodactyl.domain = newsettings.pterodactyl.domain.slice(0, -1);
 
     let packagename = await db.get("package-" + req.query.id);
     let package = newsettings.api.client.packages.list[packagename ? packagename : newsettings.api.client.packages.default];
-    if (!package) package = {	
-      ram: 0,	
-      disk: 0,	
-      cpu: 0,	
-      servers: 0	
+    if (!package) package = {  
+      ram: 0,  
+      disk: 0,  
+      cpu: 0,  
+      servers: 0  
     };
     package["name"] = packagename;
-
+  
     let pterodactylid = await db.get("users-" + req.query.id);
+    
     let userinforeq = await fetch(
       newsettings.pterodactyl.domain + "/api/application/users/" + pterodactylid + "?include=servers",
       {
@@ -63,8 +78,9 @@ module.exports.load = async function (app, db) {
       console.log("- Pterodactyl Panel ID: " + pterodactylid);
       return res.send({ status: "could not find user on panel" });
     }
-    let userinfo = await userinforeq.json();
 
+    let userinfo = await userinforeq.json();
+  
     res.send({
       status: "success",
       package: package,
@@ -74,14 +90,21 @@ module.exports.load = async function (app, db) {
         cpu: 0,
         servers: 0
       },
-      userinfo: userinfo,	
+      userinfo: userinfo,  
       coins: newsettings.api.client.coins.enabled == true ? (await db.get("coins-" + req.query.id) ? await db.get("coins-" + req.query.id) : 0) : null
     });
-  });
+  });  
+
+  /**
+   * POST /api/setcoins
+   * Sets the number of coins for a user.
+   */
 
   app.post("/api/setcoins", async (req, res) => {	
-    let settings = await check(req, res);	
-    if (!settings) return;	
+    /* Check that the API key is valid */
+    let auth = await check(req, res);	
+    if (!auth) return;	
+
     if (typeof req.body !== "object") return res.send({status: "body must be an object"});	
     if (Array.isArray(req.body)) return res.send({status: "body cannot be an array"});	
     let id = req.body.id;	
@@ -98,13 +121,22 @@ module.exports.load = async function (app, db) {
     res.send({status: "success"});	
   });
 
+  /**
+   * POST /api/updateCoins
+   * Updates the number of coins for a user.
+   */
+
   app.get("/api/updateCoins", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
+
     let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
     let userinfo = req.session.userinfo
     let b = await db.get(`coins-${req.session.userinfo.id}`)
-    if(myCache.get(`coins_${userinfo.id}`) == true) return res.send({coins: b});
+
+    if(myCache.get(`coins_${userinfo.id}`) == true) 
+    return res.send({coins: b});
     myCache.set(`coins_${userinfo.id}`, true, 59);
+
     if(await db.get(`coins-${req.session.userinfo.id}`) == null) {
       await db.set(`coins-${req.session.userinfo.id}`, 0)
     } else {
@@ -116,9 +148,15 @@ module.exports.load = async function (app, db) {
     res.send({coins: a})
   })
 
+  /**
+   * POST /api/createcoupon
+   * Creates a coupon with attributes such as coins, CPU, RAM, disk, and servers.
+   */
+
 app.post("/api/createcoupon", async (req, res) => {
-    let settings = await check(req, res);
-    if (!settings) return;
+    /* Check that the API key is valid */
+    let auth = await check(req, res);
+    if (!auth) return;
 
     if (typeof req.body !== "object") return res.send({status: "body must be an object"});
     if (Array.isArray(req.body)) return res.send({status: "body cannot be an array"});
@@ -152,9 +190,15 @@ app.post("/api/createcoupon", async (req, res) => {
     return res.json({ status: "success", code: code });
   });
 
+  /**
+   * POST /api/revokecoupon
+   * Sets the plan for a user.
+   */
+
   app.post("/api/revokecoupon", async (req, res) => {
-    let settings = await check(req, res);
-    if (!settings) return;
+    /* Check that the API key is valid */
+    let auth = await check(req, res);
+    if (!auth) return;
 
     if (typeof req.body !== "object") return res.send({status: "body must be an object"});
     if (Array.isArray(req.body)) return res.send({status: "body cannot be an array"});
@@ -172,9 +216,15 @@ app.post("/api/createcoupon", async (req, res) => {
     res.json({ status: "success" })
 });
 
+  /**
+   * POST /api/setplan
+   * Sets the plan for a user.
+   */
+
   app.post("/api/setplan", async (req, res) => {
-    let settings = await check(req, res);
-    if (!settings) return;
+    /* Check that the API key is valid */
+    let auth = await check(req, res);
+    if (!auth) return;
 
     if (!req.body) return res.send({ status: "missing body" });
 
@@ -195,9 +245,15 @@ app.post("/api/createcoupon", async (req, res) => {
     }
   });
 
+  /**
+   * POST /api/setresources
+   * Sets the resources for a user.
+   */
+
   app.post("/api/setresources", async (req, res) => {
-    let settings = await check(req, res);
-    if (!settings) return;
+    /* Check that the API key is valid */
+    let auth = await check(req, res);
+    if (!auth) return;
 
     if (!req.body) return res.send({ status: "missing body" });
 
@@ -266,6 +322,14 @@ app.post("/api/createcoupon", async (req, res) => {
     }
   });
 
+  /**
+   * Checks the authorization and returns the settings if authorized.
+   * Renders the file based on the theme and sends the response.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Object|null} - The settings object if authorized, otherwise null.
+   */
+
   async function check(req, res) {
     let settings = JSON.parse(fs.readFileSync("./settings.json").toString());
     if (settings.api.client.api.enabled == true) {
@@ -287,7 +351,7 @@ app.post("/api/createcoupon", async (req, res) => {
         if (err) {
           console.log(`[WEBSITE] An error has occured on path ${req._parsedUrl.pathname}:`);
           console.log(err);
-          return res.send("An error has occured while attempting to load this page. Please contact an administrator to fix this.");
+          return res.render("404.ejs", { err });
         };
         res.status(200);
         res.send(str);
