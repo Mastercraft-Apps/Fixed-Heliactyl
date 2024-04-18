@@ -1,6 +1,6 @@
 const settings = require('../settings.json');
 
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
 
 /**
  * Log an action to Discord
