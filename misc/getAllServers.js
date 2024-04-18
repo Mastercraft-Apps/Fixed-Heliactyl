@@ -1,6 +1,6 @@
 const settings = require('../settings.json')
 
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
 
 if (settings.pterodactyl && settings.pterodactyl.domain && settings.pterodactyl.domain.endsWith("/")) {
     settings.pterodactyl.domain = settings.pterodactyl.domain.slice(0, -1);
