@@ -344,7 +344,7 @@ app.post("/api/createcoupon", async (req, res) => {
     let theme = indexjs.get(req);
     ejs.renderFile(
       `./themes/${theme.name}/${theme.settings.notfound}`,
-      await eval(indexjs.renderdataeval),
+      await indexjs.renderdataeval(req),
       null,
       function (err, str) {
         delete req.session.newaccount;

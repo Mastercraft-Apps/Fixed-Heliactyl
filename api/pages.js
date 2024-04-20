@@ -25,7 +25,7 @@ if (settings.pterodactyl && settings.pterodactyl.domain && settings.pterodactyl.
       if (theme.settings.mustbeadmin.includes(req._parsedUrl.pathname)) {
         ejs.renderFile(
           `./themes/${theme.name}/${theme.settings.notfound}`, 
-          await eval(indexjs.renderdataeval),
+          await indexjs.renderdataeval(req),
           null,
         async function (err, str) {
           delete req.session.newaccount;
@@ -69,7 +69,7 @@ if (settings.pterodactyl && settings.pterodactyl.domain && settings.pterodactyl.
     
           ejs.renderFile(
             `./themes/${theme.name}/${theme.settings.index}`, 
-            await eval(indexjs.renderdataeval),
+            await indexjs.renderdataeval(req),
             null,
           function (err, str) {
             if (err) {
@@ -86,7 +86,7 @@ if (settings.pterodactyl && settings.pterodactyl.domain && settings.pterodactyl.
 
       ejs.renderFile(
         `./themes/${theme.name}/${theme.settings.index}`, 
-        await eval(indexjs.renderdataeval),
+        await indexjs.renderdataeval(req),
         null,
       function (err, str) {
         if (err) {
