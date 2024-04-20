@@ -98,7 +98,6 @@
           "_comment": "The Discord bot must be on these servers and have invite permissions. Automatic guild joining will not work unless role packages are configured correctly. You can always just set it to a random role & package so that only this works.",
           "enabled": false,
           "guildid": [
-            "Guild ID 1",
             "Guild ID 1"
           ]
         },
