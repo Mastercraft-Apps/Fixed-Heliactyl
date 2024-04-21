@@ -1,13 +1,11 @@
 const settings = require("../settings.json");
+const fs = require('fs');
 const fetch = require('node-fetch');
 const getPteroUser = require('../misc/getPteroUser.js');
 
-const { domain, key } = settings.pterodactyl;
-const { allow: { regen }, passwordgenerator: { length: passwordLength } } = settings.api.client;
-
-module.exports.load = async function (app, db) {
+module.exports.load = async function(app, db) {
   const redirectToPanel = (req, res) => res.redirect(domain);
-  
+
   const updateInfo = async (req, res) => {
     try {
       if (!req.session.pterodactyl) return res.redirect("/login");
@@ -28,34 +26,35 @@ module.exports.load = async function (app, db) {
 
   const regeneratePassword = async (req, res) => {
     try {
-      if (!req.session.pterodactyl) return res.redirect("/login");
-      if (!regen) return res.send("You cannot regenerate your password currently.");
+    if (!req.session.pterodactyl) return res.redirect("/login");
+    let newsettings = JSON.parse(fs.readFileSync("./settings.json"));
+    if (newsettings.api.client.allow.regen !== true) return res.send("You cannot regenerate your password currently.");
 
-      if (newsettings.pterodactyl.domain.slice(-1) == "/")
-      newsettings.pterodactyl.domain = newsettings.pterodactyl.domain.slice(0, -1);
 
-      
-      const newpassword = generateRandomPassword(passwordLength);
-      req.session.password = newpassword;
+    if (newsettings.pterodactyl.domain.slice(-1) == "/")
+    newsettings.pterodactyl.domain = newsettings.pterodactyl.domain.slice(0, -1);
 
-      await fetch(
-        `${domain}/api/application/users/${req.session.pterodactyl.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            'Content-Type': 'application/json',
-            "Authorization": `Bearer ${key}`
-          },
-          body: JSON.stringify({
-            username: req.session.pterodactyl.username,
-            email: req.session.pterodactyl.email,
-            first_name: req.session.pterodactyl.first_name,
-            last_name: req.session.pterodactyl.last_name,
-            password: newpassword
-          })
-        }
-      );
-      res.redirect("/settings");
+    let newpassword = generateRandomPassword(newsettings.api.client.passwordgenerator["length"]);
+    req.session.password = newpassword;
+
+    await fetch(
+      settings.pterodactyl.domain + "/api/application/users/" + req.session.pterodactyl.id,
+      {
+        method: "patch",
+        headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${settings.pterodactyl.key}`
+        },
+        body: JSON.stringify({
+          username: req.session.pterodactyl.username,
+          email: req.session.pterodactyl.email,
+          first_name: req.session.pterodactyl.first_name,
+          last_name: req.session.pterodactyl.last_name,
+          password: newpassword
+        })
+      }
+    );
+    res.redirect("/settings");
     } catch (error) {
       res.send("An error occurred while attempting to regenerate your password.");
     }
