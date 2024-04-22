@@ -46,7 +46,7 @@
         </li>
     <% } %>
 
-    <% if (settings.pages['resources store'] === true) { %>
+    <% if (settings.api.client.coins.store.enabled === true) { %>
     <li class="nav-item menu-items">
       <a class="nav-link" href="../store">
         <span class="menu-icon">
@@ -76,7 +76,7 @@
         </a>
       </li>
       <% } %>
-      <% if (settings.pages['join for rewards'] === true) { %>
+      <% if (settings.api.client.j4r.enabled === true) { %>
       <li class="nav-item menu-items">
         <a class="nav-link" href="../j4r">
           <span class="menu-icon">
@@ -86,7 +86,7 @@
         </a>
       </li>
       <% } %>
-    <% if (settings.pages['afk page'] === true) { %>
+    <% if (settings.api["afk page"].enabled === true) { %>
     <li class="nav-item menu-items">
       <a class="nav-link" href="../afk">
         <span class="menu-icon">

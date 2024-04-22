@@ -1,6 +1,5 @@
 const indexjs = require("../index.js");
 const adminjs = require('./admin.js');
-const settings = require("../settings.json");
 const fs = require("fs");
 const ejs = require("ejs");
 const fetch = require('node-fetch');
@@ -48,10 +47,10 @@ module.exports.load = async function (app, db) {
       newsettings.api.client.oauth2.link = newsettings.api.client.oauth2.link.slice(0, -1);
   
     if (newsettings.api.client.oauth2.callbackpath.slice(0, 1) !== "/")
-    newsettings.api.client.oauth2.callbackpath = "/" + newsettings.api.client.oauth2.callbackpath;
+    newsettings.api.client.oauth2.callbackpath = "/" + newsettings.api.client.oauth2.callbackpath
 
-      if (newsettings.pterodactyl.domain.slice(-1) == "/")
-      newsettings.pterodactyl.domain = newsettings.pterodactyl.domain.slice(0, -1);
+    if (newsettings.pterodactyl.domain.slice(-1) == "/")
+    newsettings.pterodactyl.domain = newsettings.pterodactyl.domain.slice(0, -1);
 
     let packagename = await db.get("package-" + req.query.id);
     let package = newsettings.api.client.packages.list[packagename ? packagename : newsettings.api.client.packages.default];
@@ -128,25 +127,29 @@ module.exports.load = async function (app, db) {
 
   app.get("/api/updateCoins", async (req, res) => {
     if (!req.session.pterodactyl) return res.redirect("/login");
-
-    let newsettings = JSON.parse(fs.readFileSync("./settings.json").toString());
-    let userinfo = req.session.userinfo
-    let b = await db.get(`coins-${req.session.userinfo.id}`)
-
-    if(myCache.get(`coins_${userinfo.id}`) == true) 
-    return res.send({coins: b});
-    myCache.set(`coins_${userinfo.id}`, true, 59);
-
-    if(await db.get(`coins-${req.session.userinfo.id}`) == null) {
-      await db.set(`coins-${req.session.userinfo.id}`, 0)
+  
+    let newSettings = JSON.parse(fs.readFileSync("./settings.json").toString());
+    let userInfo = req.session.userinfo;
+    let initialCoins = await db.get(`coins-${req.session.userinfo.id}`);
+  
+    if (myCache.get(`coins_${userInfo.id}`) == true) 
+      return res.send({coins: initialCoins});
+  
+    myCache.set(`coins_${userInfo.id}`, true, 59);
+  
+    if (await db.get(`coins-${userInfo.id}`) == null) {
+      await db.set(`coins-${userInfo.id}`, 0);
     } else {
-      let e = await db.get(`coins-${req.session.userinfo.id}`)
-      e = e + newsettings.api["afk page"].coins
-      await db.set(`coins-${req.session.userinfo.id}`, e)
+      let currentCoins = await db.get(`coins-${userInfo.id}`);
+      currentCoins = currentCoins + newSettings.api["afk page"].coins;
+      await db.set(`coins-${userInfo.id}`, currentCoins);
     }
-    let a = await db.get(`coins-${req.session.userinfo.id}`)
-    res.send({coins: a})
-  })
+  
+    let updatedCoins = await db.get(`coins-${userInfo.id}`);
+    res.send({coins: updatedCoins});
+  });
+  
+  
 
   /**
    * POST /api/createcoupon
