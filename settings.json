@@ -109,7 +109,7 @@
         "_comment": "Go to https://discord.dev/ and create an application to set these up.",
         "id": "0000000000000000000",
         "secret": "0000000000000000000000000000",
-        "link": "https://client.example.com",
+        "link": "https://client.gamingvalhalla.com",
         "callbackpath": "/callback",
         "prompt": true,
         "ip": {
